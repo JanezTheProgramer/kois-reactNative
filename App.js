@@ -11,6 +11,7 @@ class Point {
     alert(String(this.lat));
   }
 }
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,7 @@ export default class App extends React.Component {
     }
   }
 
-
+  
   render() {
     return (
       <View style={styles.container}>
@@ -38,6 +39,12 @@ export default class App extends React.Component {
           longitudeDelta: 0.0121,
         }}
       >
+      <MapView.Marker
+        coordinate={{latitude: 46.447314,
+          longitude: 15.192260}}
+          title={"title"}
+          description={"description"}
+      />
       </MapView>
     </View>
     );
