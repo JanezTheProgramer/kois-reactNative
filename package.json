@@ -10,7 +10,9 @@
     "expo": "^32.0.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-maps": "^0.24.2"
+    "react-native-image-pan-zoom": "^2.1.11",
+    "react-native-maps": "^0.24.2",
+    "react-native-swipe-gestures": "^1.0.3"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
