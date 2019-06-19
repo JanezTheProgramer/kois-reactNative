@@ -1,105 +1,53 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, Button, Image, Text, View, Dimensions } from "react-native";
-import MapView, {
-    AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4
-} from "react-native-maps";
-import Point from './assets/js/point';
-import ImageZoom from 'react-native-image-pan-zoom';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import { StyleSheet, ScrollView, Button, Image, Text, View, Dimensions, Alert } from "react-native";
+import Map from './components/map'
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            defaultView: true,
-            index: null,
-            school_pos: new Point(46.447314, 15.19226),
-            points: [new Point(46.447314, 15.19226), new Point(46.448314, 15.19226)]
-        };
+            isPressed: true
+        }
     }
 
-    imgs = [
-        require('./assets/img/first.jpg'),
-        require('./assets/img/second.jpg')
-    ]
-
-    text = [
-        'opis: \nNaš ekovrt  zajema 5000 m2.  Postal je čudovita popestritev šolske okolice in zanimiv učni poligon za učence. Nanj smo zelo ponosni.',
-        'opis: \nMislinja je središče širše okolice redko poseljenega Mislinjskega grabna pod južnimi pobočji Pohorja, na prelazu, kjer se stikata Pohorje in Karavanke. Nastanek prvotnega naselja je povezan z delovamjem fužin, jedro sedanjega naselja pa stoji na vrhu mislinjskega klanca 600 mnm imenovanega Šentlenart vrh ob glavni cesti Velenje - Slovenj Gradec. Mislinja zajema ob reki navzgor še zaselka Straže in Vovkarje in je najjužnejše naselje, ki je uvrščeno v koroško regijo.'
-    ]
-
-    onSwipeLeft(gestureState) {
-        /*if(this.state.defaultView == false)
-            this.setState({defaultView: true});*/
-        alert("ok");
+    pressed() {
+        this.setState({
+            isPressed: false
+        });
     }
-
-    onMarkerClick = index => this.setState({
-        index: index,
-        defaultView: false
-    });
 
     render() {
+        const { isPressed } = this.state;
         return (
-            <View style={styles.container}>
-                {this.state.defaultView ? (
-                    <MapView
-                        id={"kois_map"}
-                        mapType={"satellite"}
-                        style={StyleSheet.absoluteFillObject}
-                        provider={AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4} // remove if not using Google Maps
-                        region={{
-                            latitude: this.state.school_pos.lat,
-                            longitude: this.state.school_pos.long,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121
-                        }}
-                    >
-                        {this.state.points.map((point, count) =>
-                            <MapView.Marker
-                                key={`${count}_marker`}
-                                coordinate={{
-                                    latitude: point.lat,
-                                    longitude: point.long
-                                }}
-                                onPress={() => this.onMarkerClick(count)}
+            <View style={{ flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", marginVertical: "7%" }}>
+                {isPressed ? (
+                    <View style={{ flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", marginVertical: "7%" }}>
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+                            <Image
+                                style={{ width: 200, height: 98 }}
+                                source={require('./assets/img/solski_center.png')}
                             />
-                        )}
-                    </MapView>
+                        </View>
+                        <View style={{ flex: 3, flexDirection: "column" }}>
+                            <Image
+                                style={{ width: 200, height: 72 }}
+                                source={require('./assets/img/mislinja_logo.png')}
+                            />
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', width: 200 }}>
+                            <Button
+                                onPress={() => this.pressed()}
+                                title="MAP"
+                                color="#3273db"
+                            />
+                        </View>
+                        <View >
+                            <Text style={{ marginBottom: "0%" }}> © Janez Sedeljšak, Samo P. Pritržnik </Text>
+                        </View>
+                    </View>
                 ) : (
-                        <ScrollView
-                            horizontal={false}
-                            onD={() => this.setState({ defaultView: true })}
-                            contentContainerStyle={styles.contentContainer}
-                        >
-                            <GestureRecognizer
-                                onSwipeLeft={() => this.setState({ defaultView: true })}
-                                onSwipeRight={() => this.setState({ defaultView: true })}
-                            >
-                                <Button
-                                    onPress={() => this.setState({ defaultView: true })}
-                                    title="&#10006;"
-                                    color="#841584"
-                                />
-                                <ImageZoom
-                                    style={{
-                                        marginVertical: 10
-                                    }}
-                                    cropHeight={Number(Dimensions.get('window').width * .8)}
-                                    cropWidth={Dimensions.get('window').width}
-                                    imageWidth={Dimensions.get('window').width}
-                                    imageHeight={200}>
-                                    <Image style={{ width: '100%', height: '100%' }}
-                                        source={this.imgs[this.state.index]} />
-                                </ImageZoom>
-                                <Text style={{
-                                    paddingHorizontal: 20,
-                                    fontWeight: '600',
-                                    fontSize: 20
-                                }}>{this.text[this.state.index]}</Text>
-                            </GestureRecognizer>
-                        </ScrollView>
+                        <Map>
+                        </Map>
                     )}
             </View>
         );
