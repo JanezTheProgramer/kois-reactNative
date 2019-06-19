@@ -3,9 +3,16 @@ import { StyleSheet, Picker, ScrollView, Button, Image, Text, View, Dimensions }
 import MapView, {
     AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4
 } from "react-native-maps";
-import Point from './assets/js/point';
+//import { Point } from './../assets/js/point';
 import ImageZoom from 'react-native-image-pan-zoom';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+
+class Point {
+    constructor(lat, long) {
+      this.lat = lat;
+      this.long = long;
+    }
+}
 
 export default class App extends Component {
     constructor(props) {
@@ -45,15 +52,9 @@ export default class App extends Component {
     ]
 
     imgs = [
-        require('./assets/img/first.jpg'),
-        require('./assets/img/second.jpg')
+        require('./../assets/img/first.jpg'),
+        require('./../assets/img/second.jpg')
     ]
-
-    onSwipeLeft(gestureState) {
-        /*if(this.state.defaultView == false)
-            this.setState({defaultView: true});*/
-        alert("ok");
-    }
 
     onMarkerClick = index => this.setState({
         index: index,
