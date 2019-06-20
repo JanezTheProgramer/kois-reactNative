@@ -78,8 +78,15 @@ export default class App extends Component {
     },
     {
       location: new Point(46.447314, 15.19226),
-      header: ["Šolski ekovrt"],
-      imgs: [require("./../assets/img/neki.jpg")],
+      header: ["Šolski ekovrt", "Visoka greda", "Greda z jagodičevjem", "Hotel za žuželke", "Kompostnik", "Zelenjavni vrt"],
+      imgs: [
+          require("./../assets/img/neki.jpg"),
+          require("./../assets/img/neki.jpg"),
+          require("./../assets/img/neki.jpg"),
+          require("./../assets/img/neki.jpg"),
+          require("./../assets/img/neki.jpg"),
+          require("./../assets/img/neki.jpg"),
+        ],
       text: [
         `•	Naš ekovrt  zajema 5000 m2.  Postal je čudovita popestritev šolske okolice in zanimiv učni poligon za učence. Nanj smo zelo ponosni.
         •	Leta 2011 smo na pobudo Društva Ajda in s podporo vodstva šole, gospe ravnateljice mag. Natalije Aber Jordan ter gospe pomočnice Vesne Krebl zavihali rokave in za šolo oblikovali prve zeliščne gredice. Ob spoznanju, da kljub temu, da smo podeželska šola učence zanima delo v naravi in so zelo radi zahajali na ogled teh gredic, smo naslednje leto iz travnika oblikovali večjo obdelovalno površino, na kateri smo zasadili prvo zelenjavo. Ves čas so nam strokovno pomagali zunanji partnerji in s tem tudi predlagali razširitev našega vrta. 
@@ -89,7 +96,24 @@ export default class App extends Component {
         •	Delo obsega obdelavo tal, sejanje, saditev, pobiranje pridelkov in pripravo različnih jedi, marmelad, piškotov, čajev, dišečih vrečic, …
         •	Obujamo tudi stare običaje imeli smo projekt Od zrna do kruha 2013, Od zrna do  gvanta 2014,  Bučijada 2015, Rastlina našega vrta-ognjič 2016, Rastlina našega vrta-sladkorna pesa 2017, Krompirjada 2018, Koruzjada 2019.
         •	Kot potrditev za pravilno in uspešno delo, smo v jeseni 2013 prvič pridobili znak Šolski ekovrt,ki ga podeljuje Inštitut za trajnostni razvoj Republike Slovenije. Pridobljen znak velja dve leti zato smo ga leta 2016 in 2018 uspešno obnovili.
-        •	V letu 2016-18 smo uspešno sodelovali z založbo Gaia. Nudili so nam strokovno in finančno podporo, kar smo s pridom izkoristili in bili nagrajeni za Naj mladi vrtnarji v letu 2016 in 2017.`
+        •	V letu 2016-18 smo uspešno sodelovali z založbo Gaia. Nudili so nam strokovno in finančno podporo, kar smo s pridom izkoristili in bili nagrajeni za Naj mladi vrtnarji v letu 2016 in 2017.`,
+        `Delo pri visokih gredah je manj naporno, saj se nam ni treba sklanjati. Prst je toplejša, kar omogoča zgodnejši pridelek. Mi smo se odločili, da v visoke grede zasadimo zelišča – meliso, različne vrste met, ameriški slamnik, rožmarin, timijan, majaron, dišečo perlo, materino dušico, kamilice, ognjič, dobro misel, žajbelj, sivko…
+        Iz pridelanih zelišč v jesenskem času učenci izdelujejo čajne vrečice, mila, kreme, olja… `,
+        `Na šolskem vrtu imamo posajenega tudi nekaj jagodičevja: malinjake, aronijo, brusnice, ameriške in sibirske borovnice. Vsako leto seveda dodamo kaj novega.
+        Jagodičevje dobro uspeva zaradi sončne lege in naše oskrbe – vsako leto jih namreč ustrezno pognojimo s specialnimi naravnimi gnojili za jagodičevje,  iz bližnjega gozda priskrbimo nekaj kisle zemlje in jih nahranimo s humusom iz našega kompostnika. Zagotavljamo jim dovolj, vendar ne preveč vode. Tako nas že zgodaj poleti razveselijo z okusnimi plodovi, iz katerih skuhamo tudi kakšno marmelado, spečemo pecivo ipd. Sodelujemo s Turističnim društvom Mislinja in se v okviru prireditve Pozdrav jeseni vsako leto uspešno predstavimo s svojimi pridelki in izdelki.`,
+        `Na šolskem vrtu želimo poskrbeti tudi za preživetje žuželk. Nekatere škodljivce želimo zvabiti stran od našega vrta in jim v zameno ponuditi ustrezne življenjske pogoje v hotelu. Če se v njem naselijo koristne žuželke, pa s tem povečamo njihovo populacijo. Gostje našega hotela so pikapolonice, čebele samotarke, navadne strigalice… 
+        Zgradili smo ga leta 2013 in sicer v sodelovanju z učenci in učiteljico Lucijo Strmčnik pri izbirnem predmetu Obdelava gradiv – les ter z Albertom Javornikom iz ekološke kmetije Lešnik.`,
+        `Kompost je naš najboljši pomočnik pri skrbi za zdrava, rodovitna tla. Z njim poskrbimo za pravilno odlaganje organskih odpadkov. 
+        Pri izgradnji našega lesenega kompostnika nam je bilo poleg šolskega hišnika v veliko pomoč Društvo Ajda Koroška – Skupnost vrtičkarjev Mislinja. S svojimi nasveti in delom vsako leto poskrbijo za pravilno sestavljen kompost po biodinamični metodi.  
+        Inšitut za trajnostni razvoj je izdal uporaben priročnik za pravilno kompostiranje, ki ga najdete na naslednji povezavi: http://www.itr.si/wp-content/uploads/2019/02/Kompostiranje-gradivo-kon%C4%8Dna.pdf`,
+        `Začetki šolskega vrta segajo v 19. stoletje, ko je bila zgrajena nova osnovna šola v Šentilju pod Turjakom. Prvi članek o šolskem vrtu je bil napisan že l.1893 izpod peresa naravoslovca in pedagoga Janeza Koprivnika. Današnjo podobo koroškega gartlca je dobil leta 2014 pod mentorstvom gospoda Matjaža Ježa v sodelovanju z lokalnimi partnerji. Površina vrta je urejena po vzoru keltskega vrta, razdeljena v štiri pravokotna obodna polja z manjšim okroglim poljem v sredini.                                                                                                                 (povzeto po knjigi Matjaža Ježa in Fanike Jeromel: V vrtu z ljubeznijo)
+        Šolski vrt nam pomeni pomembno pridobitev za sam učni proces – s pomočjo njega lahko sobivamo z naravo, pri učencih razvijamo naravoslovne veščine, sposobnost natančnega opazovanja, raziskovanja, eksperimentiranja, spremljanja rasti… 
+        Delo opravljajo učenci cele šole, še posebej pa tisti, ki so vključeni v interesni dejavnosti pod mentorstvom učiteljic Sonje Blažun in Gordane Krajnc. Da nam pridelki dobro uspevajo, sledimo nekaterim smernicam:
+        •	pridelke pridelujemo na povsem ekološki način;
+        •	kolobarimo; 
+        •	pri zasaditvi smo pozorni na slabe in dobre sosede;
+        •	kompostiramo.
+        Novičke s šolskega vrta lahko najdete na spletni strani naše šole: https://osmislinja.si/category/solski-vrt/`
       ]
     }
   ];
