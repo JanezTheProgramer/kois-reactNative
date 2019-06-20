@@ -7,7 +7,9 @@ import {
   Image,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  TouchableOpacity,
+  TouchableHighlight
 } from "react-native";
 import MapView, {
   AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4
@@ -80,13 +82,13 @@ export default class App extends Component {
       location: new Point(46.447314, 15.19226),
       header: ["Šolski ekovrt", "Visoka greda", "Greda z jagodičevjem", "Hotel za žuželke", "Kompostnik", "Zelenjavni vrt"],
       imgs: [
-          require("./../assets/img/neki.jpg"),
-          require("./../assets/img/neki.jpg"),
-          require("./../assets/img/neki.jpg"),
-          require("./../assets/img/neki.jpg"),
-          require("./../assets/img/neki.jpg"),
-          require("./../assets/img/neki.jpg"),
-        ],
+        require("./../assets/img/neki.jpg"),
+        require("./../assets/img/neki.jpg"),
+        require("./../assets/img/neki.jpg"),
+        require("./../assets/img/neki.jpg"),
+        require("./../assets/img/neki.jpg"),
+        require("./../assets/img/neki.jpg"),
+      ],
       text: [
         `•	Naš ekovrt  zajema 5000 m2.  Postal je čudovita popestritev šolske okolice in zanimiv učni poligon za učence. Nanj smo zelo ponosni.
         •	Leta 2011 smo na pobudo Društva Ajda in s podporo vodstva šole, gospe ravnateljice mag. Natalije Aber Jordan ter gospe pomočnice Vesne Krebl zavihali rokave in za šolo oblikovali prve zeliščne gredice. Ob spoznanju, da kljub temu, da smo podeželska šola učence zanima delo v naravi in so zelo radi zahajali na ogled teh gredic, smo naslednje leto iz travnika oblikovali večjo obdelovalno površino, na kateri smo zasadili prvo zelenjavo. Ves čas so nam strokovno pomagali zunanji partnerji in s tem tudi predlagali razširitev našega vrta. 
@@ -154,141 +156,146 @@ export default class App extends Component {
                 />
               ))}
             </MapView>
-            <Button
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                marginBottom: 36
-              }}
-              onPress={this.props.back}
-              title="&#10006;"
-              color="#3273db"
-            />
+            <View style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <TouchableHighlight onPress={this.props.back} style={{
+                position: 'absolute',
+                bottom: 35,
+                alignSelf: "center"
+                
+            }}>
+                <Image source={require("../assets/img/back.png")} style={{width: 50, height: 50}}/>
+              </TouchableHighlight>
+            </View>
+
           </>
         ) : (
-          <ScrollView
-            horizontal={false}
-            onD={() =>
-              this.setState({
-                defaultView: true,
-                dropDownIndex: 0
-              })
-            }
-            contentContainerStyle={styles.contentContainer}
-          >
-            <GestureRecognizer
-              //onSwipeLeft={() => this.setState({ defaultView: true })}
-              onSwipeRight={() => this.setState({ defaultView: true })}
+            <ScrollView
+              horizontal={false}
+              onD={() =>
+                this.setState({
+                  defaultView: true,
+                  dropDownIndex: 0
+                })
+              }
+              contentContainerStyle={styles.contentContainer}
             >
-              {_jsonPoints[_state.marker_index].header.length > 1 ? (
-                <Picker
-                  selectedValue={_state.dropDownIndex}
-                  style={{
-                    height: 50,
-                    width: Dimensions.get("window").width - 40,
-                    marginVertical: 10,
-                    marginHorizontal: 20,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 2
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
+              <GestureRecognizer
+                //onSwipeLeft={() => this.setState({ defaultView: true })}
+                onSwipeRight={() => this.setState({ defaultView: true })}
+              >
+                {_jsonPoints[_state.marker_index].header.length > 1 ? (
+                  <Picker
+                    selectedValue={_state.dropDownIndex}
+                    style={{
+                      height: 50,
+                      width: Dimensions.get("window").width - 40,
+                      marginVertical: 10,
+                      marginHorizontal: 20,
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 2
+                      },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 3.84,
 
-                    elevation: 5
-                  }}
-                  onValueChange={(itemValue, itemIndex) => {
-                    this.setState({ dropDownIndex: Number(itemValue) });
+                      elevation: 5
+                    }}
+                    onValueChange={(itemValue, itemIndex) => {
+                      this.setState({ dropDownIndex: Number(itemValue) });
+                    }}
+                  >
+                    {_jsonPoints[_state.marker_index].header.map(
+                      (item, count) => (
+                        <Picker.Item
+                          key={`${count}_marker`}
+                          label={_jsonPoints[_state.marker_index].header[count]}
+                          value={count}
+                        />
+                      )
+                    )}
+                  </Picker>
+                ) : null}
+                <Text
+                  style={{
+                    paddingHorizontal: 20,
+                    fontWeight: "600",
+                    fontSize: 20,
+                    color: "#3273db"
                   }}
                 >
-                  {_jsonPoints[_state.marker_index].header.map(
-                    (item, count) => (
-                      <Picker.Item
-                        key={`${count}_marker`}
-                        label={_jsonPoints[_state.marker_index].header[count]}
-                        value={count}
-                      />
-                    )
-                  )}
-                </Picker>
-              ) : null}
-              <Text
-                style={{
-                  paddingHorizontal: 20,
-                  fontWeight: "600",
-                  fontSize: 20,
-                  color: "#3273db"
-                }}
-              >
-                {
-                  _jsonPoints[_state.marker_index].header[
+                  {
+                    _jsonPoints[_state.marker_index].header[
                     _state.dropDownIndex || 0
-                  ]
-                }
-              </Text>
-              <ImageZoom
-                style={{
-                  marginVertical: 10
-                }}
-                cropHeight={Number(Dimensions.get("window").width * 0.8)}
-                cropWidth={Dimensions.get("window").width}
-                imageWidth={Dimensions.get("window").width}
-                imageHeight={200}
-              >
-                <Image
-                  style={{ width: "100%", height: "100%" }}
-                  source={
-                    _jsonPoints[_state.marker_index].imgs[
-                      _state.dropDownIndex || 0
                     ]
                   }
-                />
-              </ImageZoom>
-              <Text
-                style={{
-                  paddingHorizontal: 20,
-                  fontWeight: "600",
-                  fontSize: 20,
-                  color: "#3273db"
-                }}
-              >
-                opis:
+                </Text>
+                <ImageZoom
+                  style={{
+                    marginVertical: 10
+                  }}
+                  cropHeight={Number(Dimensions.get("window").width * 0.8)}
+                  cropWidth={Dimensions.get("window").width}
+                  imageWidth={Dimensions.get("window").width}
+                  imageHeight={200}
+                >
+                  <Image
+                    style={{ width: "100%", height: "100%" }}
+                    source={
+                      _jsonPoints[_state.marker_index].imgs[
+                      _state.dropDownIndex || 0
+                      ]
+                    }
+                  />
+                </ImageZoom>
+                <Text
+                  style={{
+                    paddingHorizontal: 20,
+                    fontWeight: "600",
+                    fontSize: 20,
+                    color: "#3273db"
+                  }}
+                >
+                  opis:
               </Text>
-              <Text
-                style={{
-                  paddingHorizontal: 20,
-                  fontWeight: "600",
-                  fontSize: 20
-                }}
-              >
-                {
-                  _jsonPoints[_state.marker_index].text[
+                <Text
+                  style={{
+                    paddingHorizontal: 20,
+                    fontWeight: "600",
+                    fontSize: 20
+                  }}
+                >
+                  {
+                    _jsonPoints[_state.marker_index].text[
                     _state.dropDownIndex || 0
-                  ]
-                }
-              </Text>
-              <Button
-                style={{
-                  marginVertical: 60,
-                  padding: 15,
-                  borderRadius: 20,
-                  height: 50,
-                  width: Dimensions.get("window").width - 200,
-                  marginHorizontal: 20
-                }}
-                onPress={() =>
-                  this.setState({
-                    defaultView: true,
-                    dropDownIndex: 0
-                  })
-                }
-                title="&#10006;"
-                color="#3273db"
-              />
-            </GestureRecognizer>
-          </ScrollView>
-        )}
+                    ]
+                  }
+                </Text>
+                <Button
+                  style={{
+                    marginVertical: 60,
+                    padding: 15,
+                    borderRadius: 20,
+                    height: 50,
+                    width: Dimensions.get("window").width - 200,
+                    marginHorizontal: 20
+                  }}
+                  onPress={() =>
+                    this.setState({
+                      defaultView: true,
+                      dropDownIndex: 0
+                    })
+                  }
+                  title="&#10006;"
+                  color="#3273db"
+                />
+              </GestureRecognizer>
+            </ScrollView>
+          )}
       </View>
     );
   }

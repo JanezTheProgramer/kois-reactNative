@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, Image, Text, View } from "react-native";
+import { StyleSheet, Button, Image, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
 import Map from "./components/map";
 
 export default class App extends Component {
