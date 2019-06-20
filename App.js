@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  Button,
-  Image,
-  Text,
-  View,
-  Dimensions,
-  Alert
-} from "react-native";
+import { StyleSheet, Button, Image, Text, View } from "react-native";
 import Map from "./components/map";
 
 export default class App extends Component {
@@ -67,12 +58,19 @@ export default class App extends Component {
             </View>
             <View>
               <Text style={{ marginBottom: "0%" }}>
-                {" "}© Janez Sedeljšak, Samo P. Pritržnik{" "}
+                {" "}
+                © Janez Sedeljšak, Samo P. Pritržnik{" "}
               </Text>
             </View>
           </View>
         ) : (
-          <Map />
+          <Map
+            back={() =>
+              this.setState({
+                isPressed: true
+              })
+            }
+          />
         )}
       </>
     );
