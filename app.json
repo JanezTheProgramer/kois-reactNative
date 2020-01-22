@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "cois",
-    "slug": "cois",
+    "name": "kois",
+    "slug": "kois",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
-      "android"
+      "ios",
+      "android",
+      "web"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/flat-map-icon1.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/img/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,14 +23,8 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-
-    "description": "test version 0.1",
-
-    "android": {
-      "package": "com.elektro_in_racunalniska_sola_velenje.kois_projekt"
+    "ios": {
+      "supportsTablet": true
     }
   }
-
-  
-  
 }
