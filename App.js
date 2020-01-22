@@ -32,14 +32,14 @@ export default class App extends Component {
           >
             <View style={{ flex: 1, flexDirection: "column" }}>
               <Image
-                style={{ width: 200, height: 98 }}
-                source={require("./assets/img/solski_center.png")}
+                style={{ width: 300, height: 120 }}
+                source={require("./assets/img/Outlook-u0ql2vjd.png")}
               />
             </View>
             <View style={{ flex: 3, flexDirection: "column" }}>
               <Image
-                style={{ width: 200, height: 72 }}
-                source={require("./assets/img/mislinja_logo.png")}
+                style={{ width: 300, height: 300 }}
+                source={require("./assets/img/logo-kois.png")}
               />
             </View>
             <View
@@ -52,7 +52,7 @@ export default class App extends Component {
             >
               <Button
                 onPress={() => this.pressed()}
-                title="MAP"
+                title="Zemljevid"
                 color="#3273db"
               />
             </View>

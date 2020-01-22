@@ -290,7 +290,7 @@ export default class App extends Component {
                       dropDownIndex: 0
                     })
                   }
-                  title="&#10006;"
+                  title="nazaj"
                   color="#3273db"
                 />
               </GestureRecognizer>
