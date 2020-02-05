@@ -167,17 +167,6 @@ export default class App extends Component {
   render() {
     const _state = this.state;
     const _jsonPoints = this.json_points;
-    const images = [
-      {
-        source: {
-          uri:
-            "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
-        },
-        title: "Paris",
-        width: 806,
-        height: 720
-      }
-    ];
     return (
       <View style={styles.container}>
         {_state.defaultView ? (
@@ -292,20 +281,11 @@ export default class App extends Component {
                 />
               </ImageZoom>
               <ImageView
-                images={[
-                  {
-                    source: {
-                      uri:
-                        "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
-                    }
-                  },
-                  {
-                    source: {
-                      uri:
-                        "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
-                    }
-                  }
-                ]}
+                images={_jsonPoints[_state.marker_index].imgs[_state.dropDownIndex].map(item => ({
+                    source: item,
+                    width: 800,
+                    height: 600 
+                }))}
                 imageIndex={0}
                 isVisible={this.state.imageFullScreen}
                 onClose={() => this.setState({ imageFullScreen: false })}
