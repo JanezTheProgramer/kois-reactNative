@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, Image, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
 import Map from "./components/map";
+import Constants from 'expo-constants';
 
 export default class App extends Component {
   constructor(props) {
@@ -26,8 +27,8 @@ export default class App extends Component {
               flex: 1,
               flexDirection: "column",
               justifyContent: "center",
-              alignItems: "center",
-              marginVertical: "7%"
+              paddingTop: Constants.statusBarHeight,
+              alignItems: "center"
             }}
           >
             <View style={{ flex: 1, flexDirection: "column" }}>
@@ -84,7 +85,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  contentContainer: {
-    paddingVertical: 20
-  }
 });

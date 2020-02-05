@@ -19,6 +19,8 @@ import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer, {
   swipeDirections
 } from "react-native-swipe-gestures";
+import * as Font from "expo-font";
+import Constants from "expo-constants";
 
 class Point {
   constructor(lat, long) {
@@ -33,8 +35,17 @@ export default class App extends Component {
     this.state = {
       dropDownIndex: 0,
       defaultView: true,
-      marker_index: null
+      marker_index: null,
+      fontLoaded: false
     };
+  }
+
+  async componentDidMount() {
+    Font.loadAsync({
+      montserrat: require("./../assets/fonts/Montserrat-Regular.ttf")
+    });
+
+    this.setState({ fontLoaded: true });
   }
 
   json_points = [
@@ -80,25 +91,32 @@ export default class App extends Component {
     },
     {
       location: new Point(46.447314, 15.19226),
-      header: ["Šolski ekovrt", "Visoka greda", "Greda z jagodičevjem", "Hotel za žuželke", "Kompostnik", "Zelenjavni vrt"],
+      header: [
+        "Šolski ekovrt",
+        "Visoka greda",
+        "Greda z jagodičevjem",
+        "Hotel za žuželke",
+        "Kompostnik",
+        "Zelenjavni vrt"
+      ],
       imgs: [
         require("./../assets/img/Greda_za_zelenjavo.jpg"),
         require("./../assets/img/20130911_131329.jpg"),
         require("./../assets/img/20161006_130447.jpg"),
         require("./../assets/img/foto_HOTEL_ZA_zUzELKE.jpg"),
         require("./../assets/img/IMG_1314.jpg"),
-        require("./../assets/img/20180911_130153.jpg"),
+        require("./../assets/img/20180911_130153.jpg")
       ],
       text: [
         `•	Naš ekovrt  zajema 5000 m2.  Postal je čudovita popestritev šolske okolice in zanimiv učni poligon za učence. Nanj smo zelo ponosni.
-        •	Leta 2011 smo na pobudo Društva Ajda in s podporo vodstva šole, gospe ravnateljice mag. Natalije Aber Jordan ter gospe pomočnice Vesne Krebl zavihali rokave in za šolo oblikovali prve zeliščne gredice. Ob spoznanju, da kljub temu, da smo podeželska šola učence zanima delo v naravi in so zelo radi zahajali na ogled teh gredic, smo naslednje leto iz travnika oblikovali večjo obdelovalno površino, na kateri smo zasadili prvo zelenjavo. Ves čas so nam strokovno pomagali zunanji partnerji in s tem tudi predlagali razširitev našega vrta. 
-        •	Leta 2014 smo ga preuredili v sodelovanju z lokalnimi partnerji – občino Mislinja, Društvom Ajda, Društvom za razvoj podeželja Las ter Srednjo šolo za hortikulturo in vizualne dejavnosti Celje.
-        •	V sklopu šolskega ekovrta imamo zelenjavni  in zeliščni vrt, sadovnjak, gredice z okrasnim grmičevjem ter medovitimi rastlinami, njivo, čebelnjak, visoki gredi, kompostnik in učilnico na prostem.
-        •	Pri delu se vključujejo vsi učenci, od 1.-9. razreda, še posebej pa tisti, ki so se vključili v interesne dejavnosti, katere so povezane z delom in opazovanjem na šolskem vrtu. Zanimanje za delo pa ni samo med učenci, ampak tudi med sodelavci. Obisk je vsako leto večji. 
-        •	Delo obsega obdelavo tal, sejanje, saditev, pobiranje pridelkov in pripravo različnih jedi, marmelad, piškotov, čajev, dišečih vrečic, …
-        •	Obujamo tudi stare običaje imeli smo projekt Od zrna do kruha 2013, Od zrna do  gvanta 2014,  Bučijada 2015, Rastlina našega vrta-ognjič 2016, Rastlina našega vrta-sladkorna pesa 2017, Krompirjada 2018, Koruzjada 2019.
-        •	Kot potrditev za pravilno in uspešno delo, smo v jeseni 2013 prvič pridobili znak Šolski ekovrt,ki ga podeljuje Inštitut za trajnostni razvoj Republike Slovenije. Pridobljen znak velja dve leti zato smo ga leta 2016 in 2018 uspešno obnovili.
-        •	V letu 2016-18 smo uspešno sodelovali z založbo Gaia. Nudili so nam strokovno in finančno podporo, kar smo s pridom izkoristili in bili nagrajeni za Naj mladi vrtnarji v letu 2016 in 2017.`,
+        \n•	Leta 2011 smo na pobudo Društva Ajda in s podporo vodstva šole, gospe ravnateljice mag. Natalije Aber Jordan ter gospe pomočnice Vesne Krebl zavihali rokave in za šolo oblikovali prve zeliščne gredice. Ob spoznanju, da kljub temu, da smo podeželska šola učence zanima delo v naravi in so zelo radi zahajali na ogled teh gredic, smo naslednje leto iz travnika oblikovali večjo obdelovalno površino, na kateri smo zasadili prvo zelenjavo. Ves čas so nam strokovno pomagali zunanji partnerji in s tem tudi predlagali razširitev našega vrta. 
+        \n•	Leta 2014 smo ga preuredili v sodelovanju z lokalnimi partnerji – občino Mislinja, Društvom Ajda, Društvom za razvoj podeželja Las ter Srednjo šolo za hortikulturo in vizualne dejavnosti Celje.
+        \n•	V sklopu šolskega ekovrta imamo zelenjavni  in zeliščni vrt, sadovnjak, gredice z okrasnim grmičevjem ter medovitimi rastlinami, njivo, čebelnjak, visoki gredi, kompostnik in učilnico na prostem.
+        \n•	Pri delu se vključujejo vsi učenci, od 1.-9. razreda, še posebej pa tisti, ki so se vključili v interesne dejavnosti, katere so povezane z delom in opazovanjem na šolskem vrtu. Zanimanje za delo pa ni samo med učenci, ampak tudi med sodelavci. Obisk je vsako leto večji. 
+        \n•	Delo obsega obdelavo tal, sejanje, saditev, pobiranje pridelkov in pripravo različnih jedi, marmelad, piškotov, čajev, dišečih vrečic, …
+        \n•	Obujamo tudi stare običaje imeli smo projekt Od zrna do kruha 2013, Od zrna do  gvanta 2014,  Bučijada 2015, Rastlina našega vrta-ognjič 2016, Rastlina našega vrta-sladkorna pesa 2017, Krompirjada 2018, Koruzjada 2019.
+        \n•	Kot potrditev za pravilno in uspešno delo, smo v jeseni 2013 prvič pridobili znak Šolski ekovrt,ki ga podeljuje Inštitut za trajnostni razvoj Republike Slovenije. Pridobljen znak velja dve leti zato smo ga leta 2016 in 2018 uspešno obnovili.
+        \n•	V letu 2016-18 smo uspešno sodelovali z založbo Gaia. Nudili so nam strokovno in finančno podporo, kar smo s pridom izkoristili in bili nagrajeni za Naj mladi vrtnarji v letu 2016 in 2017.`,
         `Delo pri visokih gredah je manj naporno, saj se nam ni treba sklanjati. Prst je toplejša, kar omogoča zgodnejši pridelek. Mi smo se odločili, da v visoke grede zasadimo zelišča – meliso, različne vrste met, ameriški slamnik, rožmarin, timijan, majaron, dišečo perlo, materino dušico, kamilice, ognjič, dobro misel, žajbelj, sivko…
         Iz pridelanih zelišč v jesenskem času učenci izdelujejo čajne vrečice, mila, kreme, olja… `,
         `Na šolskem vrtu imamo posajenega tudi nekaj jagodičevja: malinjake, aronijo, brusnice, ameriške in sibirske borovnice. Vsako leto seveda dodamo kaj novega.
@@ -111,10 +129,10 @@ export default class App extends Component {
         `Začetki šolskega vrta segajo v 19. stoletje, ko je bila zgrajena nova osnovna šola v Šentilju pod Turjakom. Prvi članek o šolskem vrtu je bil napisan že l.1893 izpod peresa naravoslovca in pedagoga Janeza Koprivnika. Današnjo podobo koroškega gartlca je dobil leta 2014 pod mentorstvom gospoda Matjaža Ježa v sodelovanju z lokalnimi partnerji. Površina vrta je urejena po vzoru keltskega vrta, razdeljena v štiri pravokotna obodna polja z manjšim okroglim poljem v sredini.                                                                                                                 (povzeto po knjigi Matjaža Ježa in Fanike Jeromel: V vrtu z ljubeznijo)
         Šolski vrt nam pomeni pomembno pridobitev za sam učni proces – s pomočjo njega lahko sobivamo z naravo, pri učencih razvijamo naravoslovne veščine, sposobnost natančnega opazovanja, raziskovanja, eksperimentiranja, spremljanja rasti… 
         Delo opravljajo učenci cele šole, še posebej pa tisti, ki so vključeni v interesni dejavnosti pod mentorstvom učiteljic Sonje Blažun in Gordane Krajnc. Da nam pridelki dobro uspevajo, sledimo nekaterim smernicam:
-        •	pridelke pridelujemo na povsem ekološki način;
-        •	kolobarimo; 
-        •	pri zasaditvi smo pozorni na slabe in dobre sosede;
-        •	kompostiramo.
+        \n•	pridelke pridelujemo na povsem ekološki način;
+        \n•	kolobarimo; 
+        \n•	pri zasaditvi smo pozorni na slabe in dobre sosede;
+        \n•	kompostiramo.
         Novičke s šolskega vrta lahko najdete na spletni strani naše šole: https://osmislinja.si/category/solski-vrt/`
       ]
     }
@@ -156,54 +174,52 @@ export default class App extends Component {
                 />
               ))}
             </MapView>
-            <View style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <TouchableHighlight onPress={this.props.back} style={{
-                position: 'absolute',
-                bottom: 35,
-                alignSelf: "center"
-                
-            }}>
-                <Image source={require("../assets/img/back.png")} style={{width: 50, height: 50}}/>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <TouchableHighlight
+                onPress={this.props.back}
+                style={{
+                  position: "absolute",
+                  bottom: 35,
+                  alignSelf: "center"
+                }}
+              >
+                <Image
+                  source={require("../assets/img/back.png")}
+                  style={{ width: 50, height: 50 }}
+                />
               </TouchableHighlight>
             </View>
-
           </>
         ) : (
-            <ScrollView
-              horizontal={false}
-              onD={() =>
-                this.setState({
-                  defaultView: true,
-                  dropDownIndex: 0
-                })
-              }
-              contentContainerStyle={styles.contentContainer}
+          <ScrollView
+            horizontal={false}
+            onD={() =>
+              this.setState({
+                defaultView: true,
+                dropDownIndex: 0
+              })
+            }
+            contentContainerStyle={styles.contentContainer}
+          >
+            <GestureRecognizer
+              //onSwipeLeft={() => this.setState({ defaultView: true })}
+              onSwipeRight={() => this.setState({ defaultView: true })}
             >
-              <GestureRecognizer
-                //onSwipeLeft={() => this.setState({ defaultView: true })}
-                onSwipeRight={() => this.setState({ defaultView: true })}
-              >
-                {_jsonPoints[_state.marker_index].header.length > 1 ? (
+              {_jsonPoints[_state.marker_index].header.length > 1 ? (
+                <>
                   <Picker
                     selectedValue={_state.dropDownIndex}
                     style={{
-                      height: 50,
-                      width: Dimensions.get("window").width - 40,
-                      marginVertical: 10,
-                      marginHorizontal: 20,
-                      shadowColor: "#000",
-                      shadowOffset: {
-                        width: 0,
-                        height: 2
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: 3.84,
-
-                      elevation: 5
+                      height: 55,
+                      elevation: 2,
+                      color: "white",
+                      backgroundColor: "#444"
                     }}
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({ dropDownIndex: Number(itemValue) });
@@ -219,83 +235,91 @@ export default class App extends Component {
                       )
                     )}
                   </Picker>
-                ) : null}
-                <Text
-                  style={{
-                    paddingHorizontal: 20,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    color: "#3273db"
-                  }}
-                >
-                  {
-                    _jsonPoints[_state.marker_index].header[
-                    _state.dropDownIndex || 0
+                  <View
+                    style={{
+                      borderBottomColor: "#377591",
+                      borderBottomWidth: 3,
+                    }}
+                  />
+                </>
+              ) : null}
+              <ImageZoom
+                cropHeight={Number(Dimensions.get("window").width * 0.8)}
+                cropWidth={Dimensions.get("window").width}
+                imageWidth={Dimensions.get("window").width}
+                imageHeight={200}
+              >
+                <Image
+                  style={{ width: "100%", height: "100%" }}
+                  source={
+                    _jsonPoints[_state.marker_index].imgs[
+                      _state.dropDownIndex || 0
                     ]
                   }
-                </Text>
-                <ImageZoom
-                  style={{
-                    marginVertical: 10
-                  }}
-                  cropHeight={Number(Dimensions.get("window").width * 0.8)}
-                  cropWidth={Dimensions.get("window").width}
-                  imageWidth={Dimensions.get("window").width}
-                  imageHeight={200}
-                >
-                  <Image
-                    style={{ width: "100%", height: "100%" }}
-                    source={
-                      _jsonPoints[_state.marker_index].imgs[
-                      _state.dropDownIndex || 0
-                      ]
-                    }
-                  />
-                </ImageZoom>
-                <Text
-                  style={{
-                    paddingHorizontal: 20,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    color: "#3273db"
-                  }}
-                >
-                  opis:
+                />
+              </ImageZoom>
+              <Text
+                style={{
+                  fontFamily: this.state.fontLoaded && "montserrat",
+                  paddingHorizontal: 20,
+                  fontWeight: "600",
+                  fontSize: 22,
+                  color: "#377591"
+                }}
+              >
+                {
+                  _jsonPoints[_state.marker_index].header[
+                    _state.dropDownIndex || 0
+                  ]
+                }{": "}
               </Text>
+              <View
+                style={{
+                  borderBottomColor: "#377591",
+                  borderBottomWidth: 1,
+                  marginHorizontal: 20,
+                  marginBottom: 10
+                }}
+              />
+              <View style={{ marginHorizontal: 20 }}>
                 <Text
                   style={{
-                    paddingHorizontal: 20,
                     fontWeight: "600",
-                    fontSize: 20
+                    fontSize: 15,
+                    marginBottom: 20,
+                    textAlign: "justify",
+                    fontFamily: this.state.fontLoaded && "montserrat"
                   }}
                 >
                   {
                     _jsonPoints[_state.marker_index].text[
-                    _state.dropDownIndex || 0
+                      _state.dropDownIndex || 0
                     ]
                   }
                 </Text>
-                <Button
-                  style={{
-                    marginVertical: 60,
-                    padding: 15,
-                    borderRadius: 20,
-                    height: 50,
-                    width: Dimensions.get("window").width - 200,
-                    marginHorizontal: 20
-                  }}
-                  onPress={() =>
-                    this.setState({
-                      defaultView: true,
-                      dropDownIndex: 0
-                    })
-                  }
-                  title="nazaj"
-                  color="#3273db"
-                />
-              </GestureRecognizer>
-            </ScrollView>
-          )}
+              </View>
+
+              <Button
+                style={{
+                  marginVertical: 60,
+                  padding: 15,
+                  borderRadius: 20,
+                  height: 50,
+                  width: Dimensions.get("window").width - 200,
+                  marginHorizontal: 20
+                }}
+                onPress={() =>
+                  this.setState({
+                    defaultView: true,
+                    dropDownIndex: 0
+                  })
+                }
+                title="nazaj"
+                color="#3273db"
+              />
+            </GestureRecognizer>
+          </ScrollView>
+        )}
       </View>
     );
   }
@@ -306,9 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  },
-  contentContainer: {
-    paddingVertical: 20
+    justifyContent: "center",
+    paddingTop: Constants.statusBarHeight
   }
 });
