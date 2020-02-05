@@ -9,6 +9,8 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  Linking,
+  Alert,
   TouchableHighlight
 } from "react-native";
 import MapView, {
@@ -148,6 +150,19 @@ export default class App extends Component {
       marker_index: index,
       defaultView: false
     });
+
+  generateDirections(dir) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        let cl = position.coords;
+        Linking.openURL(
+          `https://www.google.com/maps/dir/${cl.latitude},${cl.longitude}/${dir.lat},${dir.long}/data=!3m1!4b1!4m2!4m1!3e2`
+        );
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  }
 
   render() {
     const _state = this.state;
@@ -311,7 +326,13 @@ export default class App extends Component {
                   alignItems: "center"
                 }}
               >
-                <TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() =>
+                    this.generateDirections(
+                      _jsonPoints[_state.marker_index].location
+                    )
+                  }
+                >
                   <Image
                     source={require("../assets/img/directions.png")}
                     style={{ width: 50, height: 50 }}
