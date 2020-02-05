@@ -48,7 +48,7 @@ export default class App extends Component {
                 flex: 1,
                 flexDirection: "column",
                 justifyContent: "space-between",
-                width: 200
+                width: 250
               }}
             >
               <Button
