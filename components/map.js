@@ -21,6 +21,7 @@ import GestureRecognizer, {
 } from "react-native-swipe-gestures";
 import * as Font from "expo-font";
 import Constants from "expo-constants";
+import ImageView from "react-native-image-view";
 
 class Point {
   constructor(lat, long) {
@@ -36,7 +37,8 @@ export default class App extends Component {
       dropDownIndex: 0,
       defaultView: true,
       marker_index: null,
-      fontLoaded: false
+      fontLoaded: false,
+      imageFullScreen: false
     };
   }
 
@@ -52,7 +54,7 @@ export default class App extends Component {
     {
       location: new Point(46.422282, 15.158844),
       header: ["Završe"],
-      imgs: [require("./../assets/img/zaverse1.jpg")],
+      imgs: [[require("./../assets/img/zaverse1.jpg")]],
       text: [
         "Staro ime za Završe je Šentvid nad Valdekom, kar kaže, da je nastanek v tesni povezavi z gradom Valdek na gozdnem robu. Cerkev sv. Vida iz 14. Stoletja je znana predvsem zaradi rimskih nagrobnikov, ki so vzidani v obzidju in v cerkvi.  "
       ]
@@ -60,7 +62,7 @@ export default class App extends Component {
     {
       location: new Point(46.448942, 15.2205),
       header: ["Tisnikarjeva hiša"],
-      imgs: [require("./../assets/img/tisnikarjeva_hisa1.jpg")],
+      imgs: [[require("./../assets/img/tisnikarjeva_hisa1.jpg")]],
       text: [
         "Vesnina verzija: . Človek se je umaknil, ostala je divja in neokrnjena narava.  V osrčju divje in neokrnjene narave se je leta 1928 rodil sodobni slovenski slikar Jože Tisnikar. Trinajst let je v svojem ateljeju slikal krokarje. Naslikal je veliko slik in zabeležil temno plat življenja, ki se je vsi izogibamo. "
       ]
@@ -68,7 +70,7 @@ export default class App extends Component {
     {
       location: new Point(46.422282, 15.178844),
       header: ["Huda luknja"],
-      imgs: [require("./../assets/img/huda_luknja1.jpg")],
+      imgs: [[require("./../assets/img/huda_luknja1.jpg")]],
       text: [
         "O prisotnosti prazgodovinskega človeka nam pričajo arheološki ostanki, najdeni v jami Špehovka v Hudi luknji.  Nasproti vhoda v jamo stoji spomenik nadvojvoda Janeza, ki je zaradi povečanega prometa čez slovenske dežele v začetku 19. Stoletja podprl gradnjo ceste skozi sotesko, leta 1899 se je pridružila tudi železnica Dravograd – Velenje, ki je bila ukinjena leta 1969."
       ]
@@ -76,7 +78,7 @@ export default class App extends Component {
     {
       location: new Point(46.441296, 15.197112),
       header: ["Šentlenart in cerkev sv. Lenarta"],
-      imgs: [require("./../assets/img/sentlenart4.jpg")],
+      imgs: [[require("./../assets/img/sentlenart4.jpg")]],
       text: [
         "Cerkev sv. Lenarta stoji na obrobju Turjaka in na prelomnici, ki pomeni razvodje med Dravo in Savo. Zgrajena je bila v 17. Stoletju, notranjost krasi baročno izdelani glavni oltar in oba stranska oltarja."
       ]
@@ -84,7 +86,7 @@ export default class App extends Component {
     {
       location: new Point(46.480272, 15.282131),
       header: ["Miklavževa domačija"],
-      imgs: [require("./../assets/img/mikla.jpg")],
+      imgs: [[require("./../assets/img/mikla.jpg")]],
       text: [
         'V neokrnjeni naravi nas pričaka Miklavževa domačija, ki  se ponaša s spomenikom ljudskega stavbarstva iz sredine 19. stoletja. Pri njih raste enkratna dendrološka zanimivost "Miklavževa bodika". '
       ]
@@ -100,12 +102,15 @@ export default class App extends Component {
         "Zelenjavni vrt"
       ],
       imgs: [
-        require("./../assets/img/Greda_za_zelenjavo.jpg"),
-        require("./../assets/img/20130911_131329.jpg"),
-        require("./../assets/img/20161006_130447.jpg"),
-        require("./../assets/img/foto_HOTEL_ZA_zUzELKE.jpg"),
-        require("./../assets/img/IMG_1314.jpg"),
-        require("./../assets/img/20180911_130153.jpg")
+        [
+          require("./../assets/img/Greda_za_zelenjavo.jpg"),
+          require("./../assets/img/20130911_131329.jpg")
+        ],
+        [require("./../assets/img/20130911_131329.jpg")],
+        [require("./../assets/img/20161006_130447.jpg")],
+        [require("./../assets/img/foto_HOTEL_ZA_zUzELKE.jpg")],
+        [require("./../assets/img/IMG_1314.jpg")],
+        [require("./../assets/img/20180911_130153.jpg")]
       ],
       text: [
         `•	Naš ekovrt  zajema 5000 m2.  Postal je čudovita popestritev šolske okolice in zanimiv učni poligon za učence. Nanj smo zelo ponosni.
@@ -147,6 +152,17 @@ export default class App extends Component {
   render() {
     const _state = this.state;
     const _jsonPoints = this.json_points;
+    const images = [
+      {
+        source: {
+          uri:
+            "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
+        },
+        title: "Paris",
+        width: 806,
+        height: 720
+      }
+    ];
     return (
       <View style={styles.container}>
         {_state.defaultView ? (
@@ -244,6 +260,7 @@ export default class App extends Component {
                 </>
               ) : null}
               <ImageZoom
+                onClick={() => this.setState({ imageFullScreen: true })}
                 cropHeight={Number(Dimensions.get("window").width * 0.8)}
                 cropWidth={Dimensions.get("window").width}
                 imageWidth={Dimensions.get("window").width}
@@ -255,10 +272,29 @@ export default class App extends Component {
                   source={
                     _jsonPoints[_state.marker_index].imgs[
                       _state.dropDownIndex || 0
-                    ]
+                    ][0]
                   }
                 />
               </ImageZoom>
+              <ImageView
+                images={[
+                  {
+                    source: {
+                      uri:
+                        "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
+                    }
+                  },
+                  {
+                    source: {
+                      uri:
+                        "https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg"
+                    }
+                  }
+                ]}
+                imageIndex={0}
+                isVisible={this.state.imageFullScreen}
+                onClose={() => this.setState({ imageFullScreen: false })}
+              />
               <View
                 style={{
                   borderBottomColor: "#377591",
@@ -333,7 +369,7 @@ export default class App extends Component {
                   style={{ height: 50 }}
                   onPress={() =>
                     this.setState({
-                      defaultView: true,
+                      defaultView: _state.dropDownIndex == 0 ? true : false,
                       dropDownIndex: 0
                     })
                   }
