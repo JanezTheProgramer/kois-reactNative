@@ -117,8 +117,8 @@ export default class App extends Component {
         \n•	Obujamo tudi stare običaje imeli smo projekt Od zrna do kruha 2013, Od zrna do  gvanta 2014,  Bučijada 2015, Rastlina našega vrta-ognjič 2016, Rastlina našega vrta-sladkorna pesa 2017, Krompirjada 2018, Koruzjada 2019.
         \n•	Kot potrditev za pravilno in uspešno delo, smo v jeseni 2013 prvič pridobili znak Šolski ekovrt,ki ga podeljuje Inštitut za trajnostni razvoj Republike Slovenije. Pridobljen znak velja dve leti zato smo ga leta 2016 in 2018 uspešno obnovili.
         \n•	V letu 2016-18 smo uspešno sodelovali z založbo Gaia. Nudili so nam strokovno in finančno podporo, kar smo s pridom izkoristili in bili nagrajeni za Naj mladi vrtnarji v letu 2016 in 2017.`,
-        `Delo pri visokih gredah je manj naporno, saj se nam ni treba sklanjati. Prst je toplejša, kar omogoča zgodnejši pridelek. Mi smo se odločili, da v visoke grede zasadimo zelišča – meliso, različne vrste met, ameriški slamnik, rožmarin, timijan, majaron, dišečo perlo, materino dušico, kamilice, ognjič, dobro misel, žajbelj, sivko…
-        Iz pridelanih zelišč v jesenskem času učenci izdelujejo čajne vrečice, mila, kreme, olja… `,
+        `•	Delo pri visokih gredah je manj naporno, saj se nam ni treba sklanjati. Prst je toplejša, kar omogoča zgodnejši pridelek. Mi smo se odločili, da v visoke grede zasadimo zelišča – meliso, različne vrste met, ameriški slamnik, rožmarin, timijan, majaron, dišečo perlo, materino dušico, kamilice, ognjič, dobro misel, žajbelj, sivko…
+        \n•	Iz pridelanih zelišč v jesenskem času učenci izdelujejo čajne vrečice, mila, kreme, olja… `,
         `Na šolskem vrtu imamo posajenega tudi nekaj jagodičevja: malinjake, aronijo, brusnice, ameriške in sibirske borovnice. Vsako leto seveda dodamo kaj novega.
         Jagodičevje dobro uspeva zaradi sončne lege in naše oskrbe – vsako leto jih namreč ustrezno pognojimo s specialnimi naravnimi gnojili za jagodičevje,  iz bližnjega gozda priskrbimo nekaj kisle zemlje in jih nahranimo s humusom iz našega kompostnika. Zagotavljamo jim dovolj, vendar ne preveč vode. Tako nas že zgodaj poleti razveselijo z okusnimi plodovi, iz katerih skuhamo tudi kakšno marmelado, spečemo pecivo ipd. Sodelujemo s Turističnim društvom Mislinja in se v okviru prireditve Pozdrav jeseni vsako leto uspešno predstavimo s svojimi pridelki in izdelki.`,
         `Na šolskem vrtu želimo poskrbeti tudi za preživetje žuželk. Nekatere škodljivce želimo zvabiti stran od našega vrta in jim v zameno ponuditi ustrezne življenjske pogoje v hotelu. Če se v njem naselijo koristne žuželke, pa s tem povečamo njihovo populacijo. Gostje našega hotela so pikapolonice, čebele samotarke, navadne strigalice… 
@@ -238,7 +238,7 @@ export default class App extends Component {
                   <View
                     style={{
                       borderBottomColor: "#377591",
-                      borderBottomWidth: 3,
+                      borderBottomWidth: 3
                     }}
                   />
                 </>
@@ -248,6 +248,7 @@ export default class App extends Component {
                 cropWidth={Dimensions.get("window").width}
                 imageWidth={Dimensions.get("window").width}
                 imageHeight={200}
+                style={{ backgroundColor: "#eee" }}
               >
                 <Image
                   style={{ width: "100%", height: "100%" }}
@@ -258,6 +259,29 @@ export default class App extends Component {
                   }
                 />
               </ImageZoom>
+              <View
+                style={{
+                  borderBottomColor: "#377591",
+                  borderBottomWidth: 1,
+                  marginBottom: 10
+                }}
+              />
+              <View
+                style={{
+                  paddingHorizontal: 20,
+                  marginBottom: 10,
+                  flex: 1,
+                  flexDirection: "row-reverse",
+                  alignItems: "center"
+                }}
+              >
+                <TouchableHighlight>
+                  <Image
+                    source={require("../assets/img/directions.png")}
+                    style={{ width: 50, height: 50 }}
+                  />
+                </TouchableHighlight>
+              </View>
               <Text
                 style={{
                   fontFamily: this.state.fontLoaded && "montserrat",
@@ -271,7 +295,8 @@ export default class App extends Component {
                   _jsonPoints[_state.marker_index].header[
                     _state.dropDownIndex || 0
                   ]
-                }{": "}
+                }
+                {": "}
               </Text>
               <View
                 style={{
@@ -298,25 +323,24 @@ export default class App extends Component {
                   }
                 </Text>
               </View>
-
-              <Button
+              <View
                 style={{
-                  marginVertical: 60,
-                  padding: 15,
-                  borderRadius: 20,
-                  height: 50,
-                  width: Dimensions.get("window").width - 200,
-                  marginHorizontal: 20
+                  paddingHorizontal: 20,
+                  marginVertical: 20
                 }}
-                onPress={() =>
-                  this.setState({
-                    defaultView: true,
-                    dropDownIndex: 0
-                  })
-                }
-                title="nazaj"
-                color="#3273db"
-              />
+              >
+                <Button
+                  style={{ height: 50 }}
+                  onPress={() =>
+                    this.setState({
+                      defaultView: true,
+                      dropDownIndex: 0
+                    })
+                  }
+                  title="nazaj"
+                  color="#377591"
+                />
+              </View>
             </GestureRecognizer>
           </ScrollView>
         )}
