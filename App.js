@@ -34,13 +34,13 @@ export default class App extends Component {
             <View style={{ flex: 1, flexDirection: "column" }}>
               <Image
                 style={{ width: 300, height: 120 }}
-                source={require("./assets/img/Outlook-u0ql2vjd.png")}
+                source={require("./assets/img/scv.png")}
               />
             </View>
             <View style={{ flex: 3, flexDirection: "column" }}>
               <Image
-                style={{ width: 300, height: 300 }}
-                source={require("./assets/img/logo-kois.png")}
+                style={{ width: 250, height: 250 }}
+                source={require("./assets/img/icon.png")}
               />
             </View>
             <View
