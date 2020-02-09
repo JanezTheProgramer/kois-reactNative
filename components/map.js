@@ -13,9 +13,7 @@ import {
   Alert,
   TouchableHighlight
 } from "react-native";
-import MapView, {
-  AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4
-} from "react-native-maps";
+import MapView from "react-native-maps";
 //import { Point } from './../assets/js/point';
 import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer, {
@@ -175,7 +173,6 @@ export default class App extends Component {
               id={"kois_map"}
               mapType={"satellite"}
               style={StyleSheet.absoluteFillObject}
-              provider={AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4} // remove if not using Google Maps
               region={{
                 latitude: 46.447314,
                 longitude: 15.19226,
