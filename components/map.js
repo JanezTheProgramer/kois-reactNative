@@ -164,6 +164,26 @@ export default class App extends Component {
     );
   }
 
+  renderFooters() {
+    return (
+        <View style={{
+          height: 50,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          }}>
+            <Text style={{
+              fontSize: 16,
+              color: '#FFF',
+              textAlign: 'center'
+            }}>nek string</Text>
+        </View>
+    );
+}
+
   render() {
     const _state = this.state;
     const _jsonPoints = this.json_points;
@@ -288,6 +308,7 @@ export default class App extends Component {
                 imageIndex={0}
                 isVisible={this.state.imageFullScreen}
                 onClose={() => this.setState({ imageFullScreen: false })}
+                renderFooter={this.renderFooters}
               />
               <View
                 style={{
@@ -318,23 +339,23 @@ export default class App extends Component {
                     style={{ width: 50, height: 50 }}
                   />
                 </TouchableHighlight>
-                <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  alignItems: "center"
-                }}
-              >
-                <TouchableHighlight
-                  onPress={() => this.setState({ imageFullScreen: true })}
-                >
-                  <Image
-                    source={require("../assets/img/directions.png")}
-                    style={{ width: 50, height: 50 }}
-                  />
-                </TouchableHighlight>
+                  <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    alignItems: "center"
+                  }}
+                  >
+                  <TouchableHighlight
+                    onPress={() => this.setState({ imageFullScreen: true })}
+                  >
+                    <Image
+                      source={require("../assets/img/zoom.png")}
+                      style={{ width: 50, height: 50 }}
+                    />
+                  </TouchableHighlight>
 
-              </View>>
+                </View>
               </View>
               
               
