@@ -11,11 +11,10 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
-  TouchableHighlight
+  TouchableHighlight,
+  StatusBar
 } from "react-native";
-import MapView, {
-  AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4
-} from "react-native-maps";
+import MapView from "react-native-maps";
 //import { Point } from './../assets/js/point';
 import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer, {
@@ -45,6 +44,7 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
+    StatusBar.setHidden(true);
     Font.loadAsync({
       montserrat: require("./../assets/fonts/Montserrat-Regular.ttf")
     });
@@ -175,7 +175,6 @@ export default class App extends Component {
               id={"kois_map"}
               mapType={"satellite"}
               style={StyleSheet.absoluteFillObject}
-              provider={AIzaSyAQcNvfpAyPxOrmTc5C8QG7WBj417PbjC4} // remove if not using Google Maps
               region={{
                 latitude: 46.447314,
                 longitude: 15.19226,
@@ -304,6 +303,7 @@ export default class App extends Component {
                   flex: 1,
                   flexDirection: "row-reverse",
                   alignItems: "center"
+                  
                 }}
               >
                 <TouchableHighlight
@@ -318,7 +318,26 @@ export default class App extends Component {
                     style={{ width: 50, height: 50 }}
                   />
                 </TouchableHighlight>
+                <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}
+              >
+                <TouchableHighlight
+                  onPress={() => this.setState({ imageFullScreen: true })}
+                >
+                  <Image
+                    source={require("../assets/img/directions.png")}
+                    style={{ width: 50, height: 50 }}
+                  />
+                </TouchableHighlight>
+
+              </View>>
               </View>
+              
+              
               <Text
                 style={{
                   fontFamily: this.state.fontLoaded && "montserrat",

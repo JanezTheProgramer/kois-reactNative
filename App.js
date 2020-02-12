@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, Image, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
+import { StyleSheet, Button, Image, Text, View, TouchableOpacity, TouchableHighlight, StatusBar } from "react-native";
 import Map from "./components/map";
 import Constants from 'expo-constants';
 
@@ -9,6 +9,10 @@ export default class App extends Component {
     this.state = {
       isPressed: true
     };
+  }
+
+  async componentDidMount() {
+    StatusBar.setHidden(true);
   }
 
   pressed() {
