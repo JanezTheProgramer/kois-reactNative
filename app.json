@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "kois",
-    "slug": "kois",
+    "name": "Kois",
+    "slug": "Kois",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./assets/img/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/img/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,6 +27,9 @@
       "supportsTablet": true
     },
     "android": {
+        "config": {
+            "googleMaps": { "apiKey": "AIzaSyAfbUKfRnsLao67g4PQ3gb9zE8AmPpa7-E" }
+        },
         "package": "com.janezsedeljsak.samopritrznik",
         "versionCode": 2,
         "icon": "./assets/img/icon.png"
