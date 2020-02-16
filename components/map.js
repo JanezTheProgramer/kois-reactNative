@@ -39,7 +39,8 @@ export default class App extends Component {
       defaultView: true,
       marker_index: null,
       fontLoaded: false,
-      imageFullScreen: false
+      imageFullScreen: false,
+      imageCountLabel: 0
     };
   }
 
@@ -148,7 +149,8 @@ export default class App extends Component {
   onMarkerClick = index =>
     this.setState({
       marker_index: index,
-      defaultView: false
+      defaultView: false,
+      imageCountLabel: 0
     });
 
   generateDirections(dir) {
@@ -164,7 +166,7 @@ export default class App extends Component {
     );
   }
 
-  renderFooters() {
+  renderFooters(length) {
     return (
         <View style={{
           height: 50,
@@ -179,7 +181,7 @@ export default class App extends Component {
               fontSize: 16,
               color: '#FFF',
               textAlign: 'center'
-            }}>nek string</Text>
+            }}>Slika: {this.state.imageCountLabel+1}/{length}</Text>
         </View>
     );
 }
@@ -305,10 +307,11 @@ export default class App extends Component {
                     width: 800,
                     height: 600 
                 }))}
-                imageIndex={0}
+                imageIndex={this.state.imageCountLabel}
                 isVisible={this.state.imageFullScreen}
                 onClose={() => this.setState({ imageFullScreen: false })}
-                renderFooter={this.renderFooters}
+                onImageChange={eventIndex => this.setState({ imageCountLabel: eventIndex})}
+                renderFooter={() => this.renderFooters(_jsonPoints[_state.marker_index].imgs[_state.dropDownIndex].length)}
               />
               <View
                 style={{
@@ -431,7 +434,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-    paddingTop: Constants.statusBarHeight
+    justifyContent: "center"
   }
 });
