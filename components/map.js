@@ -259,8 +259,6 @@ export default class App extends Component {
                     style={{
                       height: 55,
                       elevation: 2,
-                      color: "white",
-                      backgroundColor: "#444"
                     }}
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({ dropDownIndex: Number(itemValue) });
@@ -279,7 +277,7 @@ export default class App extends Component {
                   <View
                     style={{
                       borderBottomColor: "#377591",
-                      borderBottomWidth: 3
+                      borderBottomWidth: 1
                     }}
                   />
                 </>
