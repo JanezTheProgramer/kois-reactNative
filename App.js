@@ -16,9 +16,8 @@ export default class App extends Component {
   }
 
   pressed() {
-    this.setState({
-      isPressed: false
-    });
+    const { isPressed } = this.state;
+    this.setState({ isPressed: !isPressed });
   }
 
   render() {
@@ -56,7 +55,7 @@ export default class App extends Component {
               }}
             >
               <Button
-                onPress={() => this.pressed()}
+                onPress={this.pressed}
                 title="Zemljevid"
                 color="#3273db"
               />
@@ -69,24 +68,9 @@ export default class App extends Component {
             </View>
           </View>
         ) : (
-          <Map
-            back={() =>
-              this.setState({
-                isPressed: true
-              })
-            }
-          />
+          <Map back={this.pressed} />
         )}
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-});
