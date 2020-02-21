@@ -15,7 +15,7 @@ export default class App extends Component {
             fontLoaded: false,
             imageFullScreen: false,
             imageCountLabel: 0,
-            pointDetails: {}
+            pointDetails: null
         };
     }
 
@@ -68,7 +68,6 @@ export default class App extends Component {
     render() {
         const { backToMap } = this.props;
         const { dropDownIndex, imageFullScreen, imageCountLabel, pointDetails, fontLoaded } = this.state;
-        const pointTab = pointDetails ? pointDetails.tabs[dropDownIndex] : null;
 
         if (!pointDetails) {
             return (
@@ -79,6 +78,7 @@ export default class App extends Component {
                 />
             );
         } else {
+            const pointTab = pointDetails ? pointDetails.tabs[dropDownIndex] : null;
             return (
                 <ScrollView horizontal={false} >
                     <GestureRecognizer onSwipeRight={backToMap}>

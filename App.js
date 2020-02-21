@@ -1,11 +1,12 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Button, Image, Text, View, StatusBar } from "react-native";
 import KoisMap from "./components/map";
 import Constants from 'expo-constants';
 
 export default class App extends Component {
 
-    constructor() {
+    constructor(props) {
+        super(props);
         this.state = { isPressed: true };
     }
 
@@ -33,14 +34,14 @@ export default class App extends Component {
                             <Image style={{ width: 300, height: 120 }} source={require("./assets/img/scv.png")} />
                         </View>
                         <View style={{ flex: 3, flexDirection: "column" }}>
-                            <Image style={{ width: 250, height: 250 }} source={require("./assets/img/icon.png")} />
+                            <Image style={{ width: 280, height: 280 }} source={require("./assets/img/icon.png")} />
                         </View>
                         <View
                             style={{
                                 flex: 1,
                                 flexDirection: "column",
                                 justifyContent: "space-between",
-                                width: 250
+                                width: 300
                             }}
                         >
                             <Button onPress={() => this.pressed(isPressed)} title="Zemljevid" color="#3273db" />

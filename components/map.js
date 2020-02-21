@@ -48,16 +48,16 @@ export default class App extends Component {
               style={StyleSheet.absoluteFillObject}
               region={mapLoc}
             >
-              {markers.map((point, count) => (
-                <MapView.Marker
-                  key={count}
-                  coordinate={{
-                    latitude: point.location.lat,
-                    longitude: point.location.lon
-                  }}
-                  onPress={() => this.markerClick(point._id)}
-                />
-              ))}
+                {markers.map((point, count) => (
+                    <MapView.Marker
+                        key={count}
+                        coordinate={{
+                            latitude: point.location.lat,
+                            longitude: point.location.lon
+                        }}
+                        onPress={() => this.markerClick(point._id)}
+                    />
+                ))}
             </MapView>
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
               <TouchableHighlight onPress={back} style={{ position: "absolute", bottom: 35, alignSelf: "center" }} >
