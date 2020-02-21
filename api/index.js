@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const _API_ = 'https://kois.herokuapp.com/api/mobile/';
 
-
 export default class {
     static async getMarkerLocations() {
         return new Promise(async (resolve, reject) => {

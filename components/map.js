@@ -27,7 +27,6 @@ export default class App extends Component {
   async getMarkers() {
     const response = await api.getMarkerLocations();
     if (response.status == 200) {
-      console.log(response);
       this.setState({ markers: response.data });
     }
   }
@@ -67,7 +66,7 @@ export default class App extends Component {
             </View>
           </>
         ) : (
-          <PointView idMarker={markerView} backToHome={back} backToMap={() => this.setState({ markerView: null })}/>
+          <PointView idMarker={markerView} backToMap={() => this.setState({ markerView: null })}/>
         )}
       </View>
     );
