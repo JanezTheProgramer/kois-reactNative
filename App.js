@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, Image, Text, View, TouchableOpacity, TouchableHighlight, StatusBar } from "react-native";
-import Map from "./components/map";
+import KoisMap from "./components/map";
 import Constants from 'expo-constants';
 
 export default class App extends Component {
@@ -15,9 +15,8 @@ export default class App extends Component {
     StatusBar.setHidden(true);
   }
 
-  pressed() {
-    const { isPressed } = this.state;
-    this.setState({ isPressed: !isPressed });
+  pressed(prev) {
+    this.setState({ isPressed: !prev });
   }
 
   render() {
@@ -55,7 +54,7 @@ export default class App extends Component {
               }}
             >
               <Button
-                onPress={this.pressed}
+                onPress={() => this.pressed(isPressed)}
                 title="Zemljevid"
                 color="#3273db"
               />
@@ -68,7 +67,7 @@ export default class App extends Component {
             </View>
           </View>
         ) : (
-          <Map back={this.pressed} />
+          <KoisMap back={() => this.pressed(isPressed)} />
         )}
       </>
     );

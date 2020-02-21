@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Image, Text, View, TouchableHighlight, StatusBar } from "react-native";
 import MapView from "react-native-maps";
 import api from "./../api/index";
+import PointView from './pointview';
 
 export default class App extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class App extends Component {
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121
       },
-      mapview: true
+      markerView: null
     };
   }
 
@@ -31,12 +32,16 @@ export default class App extends Component {
     }
   }
 
+  markerClick(id) {
+    this.setState({ markerView: id });
+  }
+
   render() {
-    const { markers, mapLoc, mapview } = this.state;
+    const { markers, mapLoc, markerView } = this.state;
     const { back } = this.props;
     return (
       <View style={styles.container}>
-        {mapview ? (
+        {!markerView ? (
           <>
             <MapView
               id={"kois_map"}
@@ -51,6 +56,7 @@ export default class App extends Component {
                     latitude: point.location.lat,
                     longitude: point.location.lon
                   }}
+                  onPress={() => this.markerClick(point._id)}
                 />
               ))}
             </MapView>
@@ -61,7 +67,7 @@ export default class App extends Component {
             </View>
           </>
         ) : (
-          <Text>test</Text>
+          <PointView idMarker={markerView} backToHome={back} backToMap={() => this.setState({ markerView: null })}/>
         )}
       </View>
     );

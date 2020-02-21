@@ -8,11 +8,9 @@ import {
     Text,
     View,
     Dimensions,
-    TouchableOpacity,
     Linking,
     Alert,
     TouchableHighlight,
-    StatusBar
 } from "react-native";
 import MapView from "react-native-maps";
 //import { Point } from './../assets/js/point';
@@ -23,26 +21,25 @@ import GestureRecognizer, {
 import * as Font from "expo-font";
 import Constants from "expo-constants";
 import ImageView from "react-native-image-view";
+import api from './../api/index';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dropDownIndex: 0,
-            defaultView: true,
-            marker_index: null,
             fontLoaded: false,
             imageFullScreen: false,
-            imageCountLabel: 0
+            imageCountLabel: 0,
+            pointDetails: null
         };
     }
 
     async componentDidMount() {
-        StatusBar.setHidden(true);
+        this.getPointDetails();
         Font.loadAsync({
             montserrat: require("./../assets/fonts/Montserrat-Regular.ttf")
         });
-
         this.setState({ fontLoaded: true });
     }
 
@@ -59,7 +56,8 @@ export default class App extends Component {
         );
     }
 
-    renderFooter(length) {
+    renderImageFooter(length) {
+        const { imageCountLabel } = this.state;
         return (
             <View style={{
                 height: 50,
@@ -70,157 +68,50 @@ export default class App extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 5,
             }}>
-                <Text style={{
-                    fontSize: 16,
-                    color: '#FFF',
-                    textAlign: 'center'
-                }}>Slika: {this.state.imageCountLabel + 1}/{length}</Text>
+                <Text style={{ fontSize: 16, color: '#FFF', textAlign: 'center'}}>
+                    Slika: {imageCountLabel + 1}/{length}
+                </Text>
             </View>
         );
     }
 
+    async getPointDetails() {
+        const { idMarker } = this.props;
+        const response = await api.getPointData(idMarker);
+        if (response.status == 200) {
+            console.log(response);
+            this.setState({ pointDetails: response.data });
+        }
+    }
+
     render() {
+        const { backToHome, backToMap } = this.props;
+        const { dropDownIndex, imageFullScreen, imageCountLabel, pointDetails } = this.state;
+        if (!pointDetails) return <Text>Nalagam...</Text>
         return (
-            <ScrollView
-                horizontal={false}
-                onD={() =>
-                    this.setState({
-                        defaultView: true,
-                        dropDownIndex: 0
-                    })
-                }
-                contentContainerStyle={styles.contentContainer}
+            <ScrollView 
+                horizontal={false}     
+                onD={() => {
+                    this.setState({dropDownIndex: 0 });
+                    backToMap();
+                }}
             >
-                <GestureRecognizer
-                    //onSwipeLeft={() => this.setState({ defaultView: true })}
-                    onSwipeRight={() => this.setState({ defaultView: true })}
-                >
-                    {_jsonPoints[_state.marker_index].header.length > 1 ? (
+                <GestureRecognizer onSwipeRight={backToHome}>
+                    {pointDetails.tabs.length > 1 && (
                         <>
                             <Picker
-                                selectedValue={_state.dropDownIndex}
-                                style={{
-                                    height: 55,
-                                    elevation: 2,
-                                    color: "white",
-                                    backgroundColor: "#444"
-                                }}
+                                selectedValue={dropDownIndex}
+                                style={{ height: 55, elevation: 2, }}
                                 onValueChange={(itemValue, itemIndex) => {
                                     this.setState({ dropDownIndex: Number(itemValue) });
                                 }}
                             >
-                                {_jsonPoints[_state.marker_index].header.map((item, count) => (
-                                    <Picker.Item
-                                        key={`${count}_marker`}
-                                        label={_jsonPoints[_state.marker_index].header[count]}
-                                        value={count}
-                                    />
+                                {pointDetails.tabs.map((item, count) => (
+                                    <Picker.Item key={count} label={item.title} value={count} />
                                 ))}
                             </Picker>
-                            <View
-                                style={{
-                                    borderBottomColor: "#377591",
-                                    borderBottomWidth: 3
-                                }}
-                            />
                         </>
-                    ) : null}
-                    <ImageZoom
-                        onClick={() => this.setState({ imageFullScreen: true })}
-                        cropHeight={Number(Dimensions.get("window").width * 0.8)}
-                        cropWidth={Dimensions.get("window").width}
-                        imageWidth={Dimensions.get("window").width}
-                        imageHeight={200}
-                        style={{ backgroundColor: "#eee" }}
-                    >
-                        <Image
-                            style={{ width: "100%", height: "100%" }}
-                            source={
-                                _jsonPoints[_state.marker_index].imgs[
-                                _state.dropDownIndex || 0
-                                ][0]
-                            }
-                        />
-                    </ImageZoom>
-                    <ImageView
-                        images={_jsonPoints[_state.marker_index].imgs[
-                            _state.dropDownIndex
-                        ].map(item => ({
-                            source: item,
-                            width: 800,
-                            height: 600
-                        }))}
-                        imageIndex={this.state.imageCountLabel}
-                        isVisible={this.state.imageFullScreen}
-                        onClose={() => this.setState({ imageFullScreen: false })}
-                        onImageChange={eventIndex =>
-                            this.setState({ imageCountLabel: eventIndex })
-                        }
-                        renderFooter={() =>
-                            this.renderFooters(
-                                _jsonPoints[_state.marker_index].imgs[_state.dropDownIndex]
-                                    .length
-                            )
-                        }
-                    />
-                    <View
-                        style={{
-                            borderBottomColor: "#377591",
-                            borderBottomWidth: 1,
-                            marginBottom: 10
-                        }}
-                    />
-                    <View
-                        style={{
-                            paddingHorizontal: 20,
-                            marginBottom: 10,
-                            flex: 1,
-                            flexDirection: "row-reverse",
-                            alignItems: "center"
-                        }}
-                    >
-                        <TouchableHighlight
-                            onPress={() =>
-                                this.generateDirections(
-                                    _jsonPoints[_state.marker_index].location
-                                )
-                            }
-                        >
-                            <Image
-                                source={require("../assets/img/directions.png")}
-                                style={{ width: 50, height: 50 }}
-                            />
-                        </TouchableHighlight>
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: "row",
-                                alignItems: "center"
-                            }}
-                        >
-                            <TouchableHighlight
-                                onPress={() => this.setState({ imageFullScreen: true })}
-                            >
-                                <Image
-                                    source={require("../assets/img/zoom.png")}
-                                    style={{ width: 50, height: 50 }}
-                                />
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-
-                    <Text
-                        style={{
-                            fontFamily: this.state.fontLoaded && "montserrat",
-                            paddingHorizontal: 20,
-                            fontWeight: "600",
-                            fontSize: 22,
-                            color: "#377591"
-                        }}
-                    >
-                        {_jsonPoints[_state.marker_index].header[_state.dropDownIndex || 0]}
-                        {": "}
-                    </Text>
+                    )}
                     <View
                         style={{
                             borderBottomColor: "#377591",
@@ -229,33 +120,13 @@ export default class App extends Component {
                             marginBottom: 10
                         }}
                     />
-                    <View style={{ marginHorizontal: 20 }}>
-                        <Text
-                            style={{
-                                fontWeight: "600",
-                                fontSize: 15,
-                                marginBottom: 20,
-                                textAlign: "justify",
-                                fontFamily: this.state.fontLoaded && "montserrat"
-                            }}
-                        >
-                            {_jsonPoints[_state.marker_index].text[_state.dropDownIndex || 0]}
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            paddingHorizontal: 20,
-                            marginVertical: 20
-                        }}
-                    >
+                    <View style={{ paddingHorizontal: 20, marginVertical: 20 }} >
                         <Button
                             style={{ height: 50 }}
-                            onPress={() =>
-                                this.setState({
-                                    defaultView: _state.dropDownIndex == 0 ? true : false,
-                                    dropDownIndex: 0
-                                })
-                            }
+                            onPress={() => {
+                                this.setState({ dropDownIndex: 0 })
+                                if (dropDownIndex == 0) backToMap();
+                            }}
                             title="nazaj"
                             color="#377591"
                         />
