@@ -11,9 +11,9 @@
         ],
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/img/icon.jpg",
+        "icon": "./assets/img/icon.png",
         "splash": {
-            "image": "./assets/img/splash.jpg",
+            "image": "./assets/img/splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },
@@ -39,7 +39,7 @@
             },
             "package": "com.janezsedeljsak.samopritrznik",
             "versionCode": 2,
-            "icon": "./assets/img/icon.jpg"
+            "icon": "./assets/img/icon.png"
         }
     }
 }
