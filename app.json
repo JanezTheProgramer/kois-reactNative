@@ -1,39 +1,45 @@
 {
-  "expo": {
-    "name": "Kois",
-    "slug": "Kois",
-    "privacy": "public",
-    "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/img/icon.png",
-    "splash": {
-      "image": "./assets/img/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-        "config": {
-            "googleMaps": { "apiKey": "AIzaSyAfbUKfRnsLao67g4PQ3gb9zE8AmPpa7-E" }
+    "expo": {
+        "name": "Kois",
+        "slug": "Kois",
+        "privacy": "public",
+        "sdkVersion": "36.0.0",
+        "platforms": [
+            "ios",
+            "android",
+            "web"
+        ],
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/img/icon.jpg",
+        "splash": {
+            "image": "./assets/img/splash.jpg",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
         },
-        "package": "com.janezsedeljsak.samopritrznik",
-        "versionCode": 2,
-        "icon": "./assets/img/icon.png"
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "config": {
+                "googleMapsApiKey": "AIzaSyAfbUKfRnsLao67g4PQ3gb9zE8AmPpa7-E"
+            },
+            "bundleIdentifier": "com.janezsedeljsak.samopritrznik",
+            "buildNumber": "2"
+        },
+        "android": {
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyAfbUKfRnsLao67g4PQ3gb9zE8AmPpa7-E"
+                }
+            },
+            "package": "com.janezsedeljsak.samopritrznik",
+            "versionCode": 2,
+            "icon": "./assets/img/icon.jpg"
+        }
     }
-  }
 }
-

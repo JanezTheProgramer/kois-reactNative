@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, Text, View, TouchableHighlight, StatusBar } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import api from "./../api/index";
 import PointView from './pointview';
 
-export default class App extends Component {
+export default class KoisMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,8 +45,10 @@ export default class App extends Component {
             <MapView
               id={"kois_map"}
               mapType={"satellite"}
+              provider={PROVIDER_GOOGLE}
               style={StyleSheet.absoluteFillObject}
               region={mapLoc}
+              onRegionChangeComplete={event => this.setState({ mapLoc: event })}
             >
                 {markers.map((point, count) => (
                     <MapView.Marker

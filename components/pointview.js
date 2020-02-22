@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Picker, ScrollView, Button, Image, Text, View, Dimensions, Linking, Alert, TouchableHighlight } from "react-native";
+import { Picker, ScrollView, Button, Image, Text, View, Dimensions, ImageBackground, Linking, Alert, TouchableHighlight } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer from "react-native-swipe-gestures";
 import * as Font from "expo-font";
@@ -7,7 +7,7 @@ import ImageView from "react-native-image-view";
 import api from './../api/index';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-export default class App extends Component {
+export default class PointView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,6 +65,11 @@ export default class App extends Component {
         }
     }
 
+    changeTab(index, tabs) {
+        if (tabs == 1) return;
+        this.setState({ dropDownIndex: (index !== (tabs - 1)) ? ++index : 0 })
+    }
+
     render() {
         const { backToMap } = this.props;
         const { dropDownIndex, imageFullScreen, imageCountLabel, pointDetails, fontLoaded } = this.state;
@@ -79,107 +84,120 @@ export default class App extends Component {
             );
         } else {
             const pointTab = pointDetails ? pointDetails.tabs[dropDownIndex] : null;
+
+            const config = {
+                velocityThreshold: 1.1,
+                directionalOffsetThreshold: 10,
+                gestureIsClickThreshold: 10
+            };
+
             return (
-                <ScrollView horizontal={false} >
-                    <GestureRecognizer onSwipeRight={backToMap}>
-                        {pointDetails.tabs.length > 1 && (
-                            <>
-                                <Picker
-                                    selectedValue={dropDownIndex}
-                                    style={{ height: 55, elevation: 2, }}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        this.setState({ dropDownIndex: Number(itemValue) });
-                                    }}
-                                >
-                                    {pointDetails.tabs.map((item, count) => (
-                                        <Picker.Item key={count} label={item.title} value={count} />
-                                    ))}
-                                </Picker>
-                                <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1 }} />
-                            </>
-                        )}
-                        <ImageZoom
-                            onClick={() => this.setState({ imageFullScreen: true })}
-                            cropHeight={Number(Dimensions.get("window").width * 0.8)}
-                            cropWidth={Dimensions.get("window").width}
-                            imageWidth={Dimensions.get("window").width}
-                            imageHeight={200}
-                            style={{ backgroundColor: "#eee" }}
+                <ImageBackground source={require("./../assets/img/background.jpg")} style={{width: '100%', height: '100%'}}>
+                    <ScrollView horizontal={false} >
+                        <GestureRecognizer 
+                            config={config}
+                            onSwipeRight={() => backToMap()}
+                            onSwipeLeft={() => this.changeTab(dropDownIndex, pointDetails.tabs.length)}
                         >
-                            <Image
-                            style={{ width: "100%", height: "100%" }}
-                            source={{ uri: pointTab.images[0] }}
+                            {pointDetails.tabs.length > 1 && (
+                                <>
+                                    <Picker
+                                        selectedValue={dropDownIndex}
+                                        style={{ height: 55, elevation: 2, }}
+                                        onValueChange={(itemValue, itemIndex) => {
+                                            this.setState({ dropDownIndex: Number(itemValue) });
+                                        }}
+                                    >
+                                        {pointDetails.tabs.map((item, count) => (
+                                            <Picker.Item key={count} label={item.title} value={count} />
+                                        ))}
+                                    </Picker>
+                                    <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1 }} />
+                                </>
+                            )}
+                            <ImageZoom
+                                onClick={() => this.setState({ imageFullScreen: true })}
+                                cropHeight={Number(Dimensions.get("window").width * 0.8)}
+                                cropWidth={Dimensions.get("window").width}
+                                imageWidth={Dimensions.get("window").width}
+                                imageHeight={200}
+                                style={{ backgroundColor: "#eee" }}
+                            >
+                                <Image
+                                style={{ width: "100%", height: "100%" }}
+                                source={{ uri: pointTab.images[0] }}
+                                />
+                            </ImageZoom>
+                            <ImageView
+                                images={pointTab.images.map(item => ({
+                                    source: { uri: item},
+                                    width: 800,
+                                    height: 600 
+                                }))}
+                                imageIndex={imageCountLabel}
+                                isVisible={imageFullScreen}
+                                onClose={() => this.setState({ imageFullScreen: false })}
+                                onImageChange={eventIndex => this.setState({ imageCountLabel: eventIndex})}
+                                renderFooter={() => this.renderImageFooter(pointTab.images.length)}
                             />
-                        </ImageZoom>
-                        <ImageView
-                            images={pointTab.images.map(item => ({
-                                source: { uri: item},
-                                width: 800,
-                                height: 600 
-                            }))}
-                            imageIndex={imageCountLabel}
-                            isVisible={imageFullScreen}
-                            onClose={() => this.setState({ imageFullScreen: false })}
-                            onImageChange={eventIndex => this.setState({ imageCountLabel: eventIndex})}
-                            renderFooter={() => this.renderImageFooter(pointTab.images.length)}
-                        />
-                        <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1 }} />
-                        <View
-                            style={{
-                                margin: 15,
-                                marginHorizontal: 10,
-                                flex: 1,
-                                flexDirection: "row-reverse",
-                                alignItems: "center"
-                            }}
-                        >
-                            <TouchableHighlight onPress={() => this.generateDirections(pointDetails.location)}>
-                                <Image source={require("../assets/img/directions.png")} style={{ width: 50, height: 50 }} />
-                            </TouchableHighlight>
-                            <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                                <TouchableHighlight onPress={() => this.setState({ imageFullScreen: true })} >
-                                    <Image source={require("../assets/img/zoom.png")} style={{ width: 50, height: 50 }} />
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                        <Text
-                            style={{
-                                fontFamily: fontLoaded && "montserrat",
-                                paddingHorizontal: 10,
-                                fontWeight: "600",
-                                fontSize: 22,
-                                color: "#377591"
-                            }}
-                        >
-                            {`${pointTab.title}: `}
-                        </Text>
-                        <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1, marginHorizontal: 10 }} />
-                        <View>
-                            <Text
+                            <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1 }} />
+                            <View
                                 style={{
-                                    fontWeight: "600",
-                                    paddingHorizontal: 15,
-                                    fontSize: 15,
-                                    textAlign: "justify",
-                                    fontFamily: fontLoaded && "montserrat"
+                                    margin: 15,
+                                    marginHorizontal: 10,
+                                    flex: 1,
+                                    flexDirection: "row-reverse",
+                                    alignItems: "center"
                                 }}
                             >
-                                {pointTab.description}
-                            </Text>
-                        </View>
-                        <View style={{ paddingHorizontal: 10, marginVertical: 20 }} >
-                            <Button
-                                style={{ height: 50 }}
-                                onPress={() => {
-                                    this.setState({ dropDownIndex: 0 })
-                                    if (dropDownIndex == 0) backToMap();
+                                <TouchableHighlight onPress={() => this.generateDirections(pointDetails.location)}>
+                                    <Image source={require("../assets/img/directions.png")} style={{ width: 50, height: 50 }} />
+                                </TouchableHighlight>
+                                <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                                    <TouchableHighlight onPress={() => this.setState({ imageFullScreen: true })} >
+                                        <Image source={require("../assets/img/zoom.png")} style={{ width: 50, height: 50 }} />
+                                    </TouchableHighlight>
+                                </View>
+                            </View>
+                            <Text
+                                style={{
+                                    fontFamily: fontLoaded && "montserrat",
+                                    paddingHorizontal: 10,
+                                    fontWeight: "600",
+                                    fontSize: 22,
+                                    color: "#377591"
                                 }}
-                                title="nazaj"
-                                color="#377591"
-                            />
-                        </View>
-                    </GestureRecognizer>
-                </ScrollView>
+                            >
+                                {`${pointTab.title}: `}
+                            </Text>
+                            <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1, marginHorizontal: 10 }} />
+                            <View>
+                                <Text
+                                    style={{
+                                        fontWeight: "600",
+                                        paddingHorizontal: 15,
+                                        fontSize: 15,
+                                        textAlign: "justify",
+                                        fontFamily: fontLoaded && "montserrat"
+                                    }}
+                                >
+                                    {pointTab.description}
+                                </Text>
+                            </View>
+                            <View style={{ paddingHorizontal: 10, marginVertical: 20 }} >
+                                <Button
+                                    style={{ height: 50 }}
+                                    onPress={() => {
+                                        this.setState({ dropDownIndex: 0 })
+                                        if (dropDownIndex == 0) backToMap();
+                                    }}
+                                    title="nazaj"
+                                    color="#377591"
+                                />
+                            </View>
+                        </GestureRecognizer>
+                    </ScrollView>
+                </ImageBackground>
             );
         }                  
     }
