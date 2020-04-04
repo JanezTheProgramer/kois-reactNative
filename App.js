@@ -32,7 +32,7 @@ export default class App extends Component {
                             }}
                         >
                             <View style={{ flex: 1, flexDirection: "column" }}>
-                                <Image style={{ width: 300, height: 120 }} source={require("./assets/img/scv.png")} />
+                                <Image style={{ width: 300, height: 90 }} source={require("./assets/img/top-logo.png")} />
                             </View>
                             <View style={{ flex: 3, flexDirection: "column" }}>
                                 <Image style={{ width: 240, height: 240, margin: 20 }} source={require("./assets/img/homeicon.jpg")} />
