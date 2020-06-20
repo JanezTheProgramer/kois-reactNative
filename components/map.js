@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, Text, View, TouchableHighlight, StatusBar } from "react-native";
+import { StyleSheet, Image, Text, View, TouchableHighlight } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import api from "./../api/index";
 import PointView from './pointview';

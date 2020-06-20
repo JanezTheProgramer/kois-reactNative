@@ -71,10 +71,6 @@ export default class PointView extends Component {
         this.setState({ dropDownIndex: (index !== (tabs - 1)) ? ++index : 0 })
     }
 
-    renderDescription = desc => `
-        <div style="padding: 10px; text-align: justify;">${desc}</div>
-    `
-
     render() {
         const { backToMap } = this.props;
         const { dropDownIndex, imageFullScreen, imageCountLabel, pointDetails, fontLoaded } = this.state;
@@ -176,7 +172,7 @@ export default class PointView extends Component {
                                 {`${pointTab.title}: `}
                             </Text>
                             <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1, marginHorizontal: 10 }} />
-                            <HTML html={this.renderDescription(pointTab.description)} imagesMaxWidth={Dimensions.get('window').width} />
+                            <HTML html={pointTab.description} imagesMaxWidth={Dimensions.get('window').width} />
                             <View style={{ paddingHorizontal: 10, marginVertical: 20 }} >
                                 <Button
                                     style={{ height: 50 }}
