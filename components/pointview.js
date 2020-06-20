@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Picker, ScrollView, Button, Image, Text, View, Dimensions, ImageBackground, Linking, Alert, TouchableHighlight } from "react-native";
+import HTML from 'react-native-render-html';
 import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer from "react-native-swipe-gestures";
 import * as Font from "expo-font";
@@ -50,7 +51,7 @@ export default class PointView extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 5,
             }}>
-                <Text style={{ fontSize: 16, color: '#FFF', textAlign: 'center'}}>
+                <Text style={{ fontSize: 16, color: '#FFF', textAlign: 'center' }}>
                     Slika: {imageCountLabel + 1}/{length}
                 </Text>
             </View>
@@ -69,6 +70,10 @@ export default class PointView extends Component {
         if (tabs == 1) return;
         this.setState({ dropDownIndex: (index !== (tabs - 1)) ? ++index : 0 })
     }
+
+    renderDescription = desc => `
+        <div style="padding: 10px; text-align: justify;">${desc}</div>
+    `
 
     render() {
         const { backToMap } = this.props;
@@ -92,9 +97,9 @@ export default class PointView extends Component {
             };
 
             return (
-                <ImageBackground source={require("./../assets/img/background.jpg")} style={{width: '100%', height: '100%'}}>
+                <ImageBackground source={require("./../assets/img/background.jpg")} style={{ width: '100%', height: '100%' }}>
                     <ScrollView horizontal={false} >
-                        <GestureRecognizer 
+                        <GestureRecognizer
                             config={config}
                             onSwipeRight={() => backToMap()}
                             onSwipeLeft={() => this.changeTab(dropDownIndex, pointDetails.tabs.length)}
@@ -124,20 +129,20 @@ export default class PointView extends Component {
                                 style={{ backgroundColor: "#eee" }}
                             >
                                 <Image
-                                style={{ width: "100%", height: "100%" }}
-                                source={{ uri: pointTab.images[0] }}
+                                    style={{ width: "100%", height: "100%" }}
+                                    source={{ uri: pointTab.images[0] }}
                                 />
                             </ImageZoom>
                             <ImageView
                                 images={pointTab.images.map(item => ({
-                                    source: { uri: item},
+                                    source: { uri: item },
                                     width: 800,
-                                    height: 600 
+                                    height: 600
                                 }))}
                                 imageIndex={imageCountLabel}
                                 isVisible={imageFullScreen}
                                 onClose={() => this.setState({ imageFullScreen: false })}
-                                onImageChange={eventIndex => this.setState({ imageCountLabel: eventIndex})}
+                                onImageChange={eventIndex => this.setState({ imageCountLabel: eventIndex })}
                                 renderFooter={() => this.renderImageFooter(pointTab.images.length)}
                             />
                             <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1 }} />
@@ -171,19 +176,7 @@ export default class PointView extends Component {
                                 {`${pointTab.title}: `}
                             </Text>
                             <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1, marginHorizontal: 10 }} />
-                            <View>
-                                <Text
-                                    style={{
-                                        fontWeight: "600",
-                                        paddingHorizontal: 15,
-                                        fontSize: 15,
-                                        textAlign: "justify",
-                                        fontFamily: fontLoaded && "montserrat"
-                                    }}
-                                >
-                                    {pointTab.description}
-                                </Text>
-                            </View>
+                            <HTML html={this.renderDescription(pointTab.description)} imagesMaxWidth={Dimensions.get('window').width} />
                             <View style={{ paddingHorizontal: 10, marginVertical: 20 }} >
                                 <Button
                                     style={{ height: 50 }}
@@ -199,6 +192,6 @@ export default class PointView extends Component {
                     </ScrollView>
                 </ImageBackground>
             );
-        }                  
+        }
     }
 }
