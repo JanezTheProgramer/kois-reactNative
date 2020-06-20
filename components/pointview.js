@@ -172,7 +172,9 @@ export default class PointView extends Component {
                                 {`${pointTab.title}: `}
                             </Text>
                             <View style={{ borderBottomColor: "#377591", borderBottomWidth: 1, marginHorizontal: 10 }} />
-                            <HTML html={pointTab.description} imagesMaxWidth={Dimensions.get('window').width} />
+                            <View style={{ paddingHorizontal: 10 }}>
+                                <HTML html={pointTab.description} imagesMaxWidth={Dimensions.get('window').width} />
+                            </View>
                             <View style={{ paddingHorizontal: 10, marginVertical: 20 }} >
                                 <Button
                                     style={{ height: 50 }}
