@@ -16,7 +16,8 @@ export default class PointView extends Component {
             fontLoaded: false,
             imageFullScreen: false,
             imageCountLabel: 0,
-            pointDetails: null
+            pointDetails: null,
+            mounted: true
         };
     }
 
@@ -26,6 +27,11 @@ export default class PointView extends Component {
             montserrat: require("./../assets/fonts/Montserrat-Regular.ttf")
         });
         this.setState({ fontLoaded: true });
+        
+    }
+
+    componentWillUnmount() {
+        this.setState({ mounted: false })
     }
 
     generateDirections(dir) {
@@ -62,13 +68,14 @@ export default class PointView extends Component {
         const { idMarker } = this.props;
         const response = await api.getPointData(idMarker);
         if (response.status == 200) {
+            if (!this.state.mounted) return;
             this.setState({ pointDetails: response.data });
         }
     }
 
     changeTab(index, tabs) {
         if (tabs == 1) return;
-        this.setState({ dropDownIndex: (index !== (tabs - 1)) ? ++index : 0 })
+        this.setState({ dropDownIndex: (index !== (tabs - 1)) ? (index + 1) : 0 })
     }
 
     render() {
