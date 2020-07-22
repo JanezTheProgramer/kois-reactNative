@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Image, Text, View, StatusBar, ImageBackground, StyleSheet, TextInput } from "react-native";
+import { Button, Image, Text, View, StatusBar, ImageBackground, StyleSheet, TextInput, AsyncStorage } from "react-native";
 import KoisMap from "./components/map";
 import Constants from 'expo-constants';
 import Modal from 'react-native-modal';
@@ -9,26 +9,28 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
-            isHome: true, 
+        this.state = {
+            isHome: true,
             isModalVisible: false,
-            modalText: ""
+            modalText: "",
+            beforeSave: ""
         };
     }
 
     componentDidMount = async () => {
         StatusBar.setHidden(true);
         const uri = await AsyncStorage.getItem('apiURI');
-        this.setState({ 
+        this.setState({
             modalText: uri ? uri : api.DEFAULT_URI
         });
+        console.log(api.DEFAULT_URI, "hello")
     }
 
     async setNewApiRoute(reset = false) {
         if (reset) {
             await AsyncStorage.removeItem('apiURI');
-            this.setState({ modalText: "" });
-        } else 
+            this.setState({ modalText: api.DEFAULT_URI });
+        } else
             await AsyncStorage.setItem('apiURI', this.state.modalText);
     }
 
@@ -44,8 +46,8 @@ export default class App extends Component {
                     width: "100%"
                 }}>
                     <Text>Povezava do spletnega vmesnika:</Text>
-                    <TextInput 
-                        style={{ 
+                    <TextInput
+                        style={{
                             borderBottomColor: '#444',
                             borderBottomWidth: 1,
                             padding: 3,
@@ -53,12 +55,12 @@ export default class App extends Component {
                         }}
                         value={this.state.modalText}
                         onChangeText={modalText => this.setState({ modalText })}
-                     />
+                    />
                     <View style={{ flexDirection: "row-reverse", marginTop: 20 }}>
                         <View style={styles.buttonStyle}>
-                            <Button 
-                                title="Shrani" 
-                                color="#377591" 
+                            <Button
+                                title="Shrani"
+                                color="#377591"
                                 onPress={() => {
                                     this.setState({ isModalVisible: false });
                                     this.setNewApiRoute();
@@ -68,15 +70,18 @@ export default class App extends Component {
                         <View style={{ margin: 10 }} />
                         <View style={styles.buttonStyle}>
                             <Button
-                                title="Prekliči" 
+                                title="Prekliči"
                                 color="#e55"
-                                onPress={() => this.setState({ isModalVisible: false })}
+                                onPress={() => this.setState({
+                                    isModalVisible: false,
+                                    modalText: this.state.beforeSave
+                                })}
                             />
                         </View>
                         <View style={{ margin: 10 }} />
                         <View style={styles.buttonStyle}>
-                            <Button 
-                                title="Ponastavi" 
+                            <Button
+                                title="Ponastavi"
                                 color="#4a4a4a"
                                 onPress={() => {
                                     this.setState({ isModalVisible: false });
@@ -115,7 +120,10 @@ export default class App extends Component {
                                 />
                                 <View style={{ marginBottom: 20 }} />
                                 <Button
-                                    onPress={() => this.setState({ isModalVisible: true })}
+                                    onPress={() => this.setState({
+                                        isModalVisible: true,
+                                        beforeSave: this.state.modalText
+                                    })}
                                     title="Nastavitve"
                                     color="#4a4a4a"
                                 />

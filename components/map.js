@@ -21,7 +21,7 @@ export default class KoisMap extends Component {
     }
 
     async componentDidMount() {
-        this.getMarkers(uri);
+        this.getMarkers();
         this.setState({ fontLoaded: true });
     }
 
@@ -31,9 +31,9 @@ export default class KoisMap extends Component {
 
     async getMarkers() {
         const response = await api.getMarkerLocations();
-        if (response.status == 200) {
+        if (response.status == 200 && Array.isArray(response.data)) {
             if (!this.state.mounted) return;
-            this.setState({ markers: response.data });
+            this.setState({ markers: response.data || [] });
         }
     }
 

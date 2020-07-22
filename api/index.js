@@ -8,18 +8,21 @@ export default class {
 
     static async _getURI() {
         const uri = await AsyncStorage.getItem('apiURI');
+        console.log(!uri ? this.DEFAULT_URI : uri);
         return !uri ? this.DEFAULT_URI : uri;
     }
 
     static async getMarkerLocations() {
         return new Promise(async (resolve, reject) => {
-            await axios.get(`${this._getURI()}/locations`).then(resolve).catch(reject);
+            await axios.get(`${await this._getURI()}/locations`)
+                .then(resolve).catch(() => resolve([]));
         });
     }
 
     static async getPointData(id) {
         return new Promise(async (resolve, reject) => {
-            await axios.get(`${this._getURI()}/location/${id}`).then(resolve).catch(reject);
+            await axios.get(`${await this._getURI()}/location/${id}`)
+                .then(resolve).catch(() => resolve([]));
         });
     }
 }

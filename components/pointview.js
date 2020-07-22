@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Picker, ScrollView, Button, Image, Text, View, Dimensions, ImageBackground, Linking, Alert, TouchableHighlight } from "react-native";
+import { Picker, ScrollView, Button, Image, Text, View, Dimensions, 
+    ImageBackground, Linking, Alert, TouchableHighlight } from "react-native";
 import HTML from 'react-native-render-html';
 import ImageZoom from "react-native-image-pan-zoom";
 import GestureRecognizer from "react-native-swipe-gestures";
